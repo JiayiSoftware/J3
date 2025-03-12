@@ -45,7 +45,7 @@ void application::run() {
     main_window->show();
 
     // window loop
-    MSG message;
+    MSG message = { };
     while (running) {
         while (PeekMessage(&message, nullptr, 0, 0, PM_REMOVE)) {
             TranslateMessage(&message);

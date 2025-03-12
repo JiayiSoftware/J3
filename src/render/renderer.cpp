@@ -9,7 +9,7 @@ void renderer::initialize(const HWND handle, const vector2 size, const bool hard
 }
 
 void renderer::render_frame() {
-    constexpr float background[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float background[] = { 0.0f, 0.0f, 1.0f, 1.0f };
     this->device_context->ClearRenderTargetView(this->render_target_view.get(), background);
 
     // render stuff here
@@ -73,5 +73,6 @@ void renderer::create_render_target() {
         // handle error
     }
 
-    this->device_context->OMSetRenderTargets(1, this->render_target_view.put(), nullptr);
+    ID3D11RenderTargetView* render_target_view = this->render_target_view.get(); // instead of winrt::com_ptr::put
+    this->device_context->OMSetRenderTargets(1, &render_target_view, nullptr);
 }
