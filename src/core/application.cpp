@@ -4,6 +4,8 @@ alignas(application) char application_buffer[sizeof(application)];
 
 application::application(const HINSTANCE instance) {
     this->instance = instance;
+
+    CoInitialize(nullptr);
     
     // get icon because i don't want to load one from a file
     const auto module_path = new wchar_t[MAX_PATH];

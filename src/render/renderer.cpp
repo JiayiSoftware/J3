@@ -1,18 +1,55 @@
 #include "renderer.hpp"
 
+#include <WICTextureLoader.h>
+
+#include "mesh/vertex.hpp"
+#include "resource/resource.hpp"
+
+LOAD_RESOURCE(obj_vertex_vs_cso)
+LOAD_RESOURCE(obj_pixel_ps_cso)
+
+LOAD_RESOURCE(resources_textures_peppa_pig_png)
+
 void renderer::initialize(const HWND handle, const vector2 size, const bool hardware_accelerated) {
     this->window_handle = handle;
     this->window_size = size;
     
     create_device_and_swap_chain(hardware_accelerated);
     create_render_target();
+    create_depth_stencil();
+    set_viewport();
+    create_rasterizer();
+    create_sampler();
+    setup_shaders();
+    load_textures();
+
+    initialize_scene();
 }
 
 void renderer::render_frame() {
-    float background[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+    float background[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     this->device_context->ClearRenderTargetView(this->render_target_view.get(), background);
+    this->device_context->ClearDepthStencilView(this->depth_stencil_view.get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-    // render stuff here
+    this->device_context->IASetInputLayout(input_layout.get());
+    this->device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    this->device_context->RSSetState(rasterizer_state.get());
+    this->device_context->OMSetDepthStencilState(depth_stencil_state.get(), 0);
+
+    auto sampler = sampler_state.get();
+    this->device_context->PSSetSamplers(0, 1, &sampler);
+    auto texture = a_texture.get();
+    this->device_context->VSSetShader(vs.get().get(), nullptr, 0);
+    this->device_context->PSSetShader(ps.get().get(), nullptr, 0);
+
+    const UINT stride = sizeof(vertex);
+    const UINT offset = 0;
+    
+    auto vb = vertex_buffer.get();
+    this->device_context->PSSetShaderResources(0, 1, &texture);
+    this->device_context->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+    this->device_context->Draw(6, 0);
 
     this->swap_chain->Present(1, 0);
 }
@@ -72,7 +109,114 @@ void renderer::create_render_target() {
     if (FAILED(hr)) {
         // handle error
     }
+}
 
-    ID3D11RenderTargetView* render_target_view = this->render_target_view.get(); // instead of winrt::com_ptr::put
-    this->device_context->OMSetRenderTargets(1, &render_target_view, nullptr);
+void renderer::create_depth_stencil() {
+    CD3D11_TEXTURE2D_DESC desc(DXGI_FORMAT_D24_UNORM_S8_UINT, this->window_size.x, this->window_size.y);
+    desc.MipLevels = 1;
+    desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+    HRESULT hr = this->device->CreateTexture2D(&desc, nullptr, this->depth_stencil_buffer.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+
+    hr = this->device->CreateDepthStencilView(this->depth_stencil_buffer.get(), nullptr, this->depth_stencil_view.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+
+    // set render target here instead of in create_render_target
+    ID3D11RenderTargetView* render_target_view = this->render_target_view.get();
+    this->device_context->OMSetRenderTargets(1, &render_target_view, this->depth_stencil_view.get());
+
+    CD3D11_DEPTH_STENCIL_DESC depth_stencil_desc(D3D11_DEFAULT);
+    depth_stencil_desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+
+    hr = this->device->CreateDepthStencilState(&depth_stencil_desc, this->depth_stencil_state.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+}
+
+void renderer::set_viewport() {
+    CD3D11_VIEWPORT viewport(0.0f, 0.0f, this->window_size.x, this->window_size.y);
+    this->device_context->RSSetViewports(1, &viewport);
+}
+
+void renderer::create_rasterizer() {
+    const CD3D11_RASTERIZER_DESC desc(D3D11_DEFAULT); // solid fill mode, cull back, front is clockwise
+    HRESULT hr = this->device->CreateRasterizerState(&desc, this->rasterizer_state.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+}
+
+void renderer::create_sampler() {
+    CD3D11_SAMPLER_DESC desc(D3D11_DEFAULT);
+    HRESULT hr = this->device->CreateSamplerState(&desc, this->sampler_state.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+}
+
+void renderer::setup_shaders() {
+    D3D11_INPUT_ELEMENT_DESC* input_layout = vertex::get_input_layout();
+
+    const auto vertex_shader_data = GET_RESOURCE(obj_vertex_vs_cso);
+    const auto pixel_shader_data = GET_RESOURCE(obj_pixel_ps_cso);
+
+    vs.initialize(device, vertex_shader_data);
+    ps.initialize(device, pixel_shader_data);
+
+    HRESULT hr = this->device->CreateInputLayout(
+        input_layout,
+        3,
+        vs.data(),
+        vs.size(), // shader bytecode size
+        this->input_layout.put()
+    );
+
+    if (FAILED(hr)) {
+        // handle error
+    }
+}
+
+void renderer::load_textures() {
+    resource tex = GET_RESOURCE(resources_textures_peppa_pig_png);
+    
+    HRESULT hr = DirectX::CreateWICTextureFromMemory(
+        this->device.get(),
+        reinterpret_cast<const uint8_t*>(tex.data()),
+        tex.size(),
+        nullptr,
+        this->a_texture.put()
+    );
+
+    if (FAILED(hr)) {
+        std::print("lol");
+    }
+}
+
+void renderer::initialize_scene() {
+    vertex v[] = {
+        // tri 1
+        { { -0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
+        { { -0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f } },
+        { { 0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } },
+
+        // tri 2
+        { { -0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
+        { { 0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } },
+        { { 0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f } }
+    };
+
+    CD3D11_BUFFER_DESC desc(sizeof(vertex) * ARRAYSIZE(v), D3D11_BIND_VERTEX_BUFFER);
+    D3D11_SUBRESOURCE_DATA data = { };
+    data.pSysMem = v;
+
+    HRESULT hr = this->device->CreateBuffer(&desc, &data, vertex_buffer.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
 }

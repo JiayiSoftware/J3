@@ -1,5 +1,6 @@
 #pragma once
 #include "common.hpp"
+#include "shader/shader.hpp"
 
 class adapter_data {
 public:
@@ -24,7 +25,29 @@ private:
     winrt::com_ptr<ID3D11DeviceContext> device_context;
     winrt::com_ptr<IDXGISwapChain> swap_chain;
     winrt::com_ptr<ID3D11RenderTargetView> render_target_view;
+
+    winrt::com_ptr<ID3D11InputLayout> input_layout;
+    vertex_shader vs;
+    pixel_shader ps;
+
+    winrt::com_ptr<ID3D11Buffer> vertex_buffer;
+    
+    winrt::com_ptr<ID3D11RasterizerState> rasterizer_state;
+
+    winrt::com_ptr<ID3D11DepthStencilView> depth_stencil_view;
+    winrt::com_ptr<ID3D11DepthStencilState> depth_stencil_state;
+    winrt::com_ptr<ID3D11Texture2D> depth_stencil_buffer;
+
+    winrt::com_ptr<ID3D11SamplerState> sampler_state;
+    winrt::com_ptr<ID3D11ShaderResourceView> a_texture;
     
     void create_device_and_swap_chain(bool hardware_accelerated);
     void create_render_target();
+    void create_depth_stencil();
+    void set_viewport();
+    void create_rasterizer();
+    void create_sampler();
+    void setup_shaders();
+    void load_textures();
+    void initialize_scene();
 };

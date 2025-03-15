@@ -13,17 +13,25 @@ window::window(const HINSTANCE instance, const std::wstring& title, const vector
 }
 
 void window::finish_create(const HINSTANCE instance, const std::wstring& title, const vector2 position, const vector2 size) {
-    // TODO: AdjustWindowRectEx
+    RECT rect;
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = size.x;
+    rect.bottom = size.y;
+
+    AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, FALSE, WS_EX_APPWINDOW);
+
+    vector2 real_size = { static_cast<float>(rect.right - rect.left), static_cast<float>(rect.bottom - rect.top) };
     
     handle = CreateWindowEx(
         WS_EX_APPWINDOW,
         WINDOW_CLASS_NAME,
         title.c_str(),
-        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+        WS_OVERLAPPEDWINDOW,
         position.x,
         position.y,
-        size.x,
-        size.y,
+        real_size.x,
+        real_size.y,
         nullptr,
         nullptr,
         instance,
