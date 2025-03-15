@@ -7,7 +7,7 @@ class application {
 public:
     HINSTANCE instance;
     std::vector<std::unique_ptr<window>> windows;
-    bool running;
+    bool running = false;
     
     explicit application(HINSTANCE instance);
 

@@ -5,7 +5,10 @@ alignas(application) char application_buffer[sizeof(application)];
 application::application(const HINSTANCE instance) {
     this->instance = instance;
 
-    CoInitialize(nullptr);
+    HRESULT hr = CoInitialize(nullptr);
+    if (FAILED(hr)) { // although this will probably never fail
+        // handle error
+    }
     
     // get icon because i don't want to load one from a file
     const auto module_path = new wchar_t[MAX_PATH];
