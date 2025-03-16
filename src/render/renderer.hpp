@@ -1,5 +1,7 @@
 #pragma once
 #include "common.hpp"
+
+#include "buffer/d3d_buffer.hpp"
 #include "shader/shader.hpp"
 
 class adapter_data {
@@ -30,7 +32,9 @@ private:
     vertex_shader vs;
     pixel_shader ps;
 
-    winrt::com_ptr<ID3D11Buffer> vertex_buffer;
+    d3d_buffer vertex_buffer;
+    d3d_buffer index_buffer;
+    d3d_buffer constant_buffer;
     
     winrt::com_ptr<ID3D11RasterizerState> rasterizer_state;
 
@@ -49,5 +53,6 @@ private:
     void create_sampler();
     void setup_shaders();
     void load_textures();
+    void create_constant_buffers();
     void initialize_scene();
 };

@@ -22,6 +22,7 @@ void renderer::initialize(const HWND handle, const vector2 size, const bool hard
     create_sampler();
     setup_shaders();
     load_textures();
+    create_constant_buffers();
 
     initialize_scene();
 }
@@ -40,16 +41,28 @@ void renderer::render_frame() {
     auto sampler = sampler_state.get();
     this->device_context->PSSetSamplers(0, 1, &sampler);
     auto texture = a_texture.get();
+    this->device_context->PSSetShaderResources(0, 1, &texture);
     this->device_context->VSSetShader(vs.get().get(), nullptr, 0);
     this->device_context->PSSetShader(ps.get().get(), nullptr, 0);
 
-    const UINT stride = sizeof(vertex);
-    const UINT offset = 0;
+    // update constant buffer
+    cb_vertex cb;
+    cb.x_offset = 0.0f;
+    cb.y_offset = 0.5f;
+
+    D3D11_MAPPED_SUBRESOURCE mapped_resource;
+    this->device_context->Map(constant_buffer.get().get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped_resource);
+    memcpy(mapped_resource.pData, &cb, sizeof(cb));
+    this->device_context->Unmap(constant_buffer.get().get(), 0);
+
+    auto cb_ptr = constant_buffer.get().get();
+    this->device_context->VSSetConstantBuffers(0, 1, &cb_ptr);
     
-    auto vb = vertex_buffer.get();
-    this->device_context->PSSetShaderResources(0, 1, &texture);
-    this->device_context->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
-    this->device_context->Draw(6, 0);
+    const UINT offset = 0;
+    auto vb = vertex_buffer.get().get();
+    this->device_context->IASetVertexBuffers(0, 1, &vb, vertex_buffer.stride_ptr(), &offset);
+    this->device_context->IASetIndexBuffer(index_buffer.get().get(), DXGI_FORMAT_R32_UINT, 0);
+    this->device_context->DrawIndexed(index_buffer.size(), 0, 0);
 
     this->swap_chain->Present(1, 0);
 }
@@ -194,29 +207,27 @@ void renderer::load_textures() {
     );
 
     if (FAILED(hr)) {
-        std::print("lol");
+        // handle error
     }
 }
 
+void renderer::create_constant_buffers() {
+    constant_buffer.initialize<cb_vertex>(this->device);
+}
+
 void renderer::initialize_scene() {
-    vertex v[] = {
-        // tri 1
+    constexpr vertex v[] = {
         { { -0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
         { { -0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f } },
-        { { 0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } },
-
-        // tri 2
-        { { -0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
         { { 0.5f, 0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } },
         { { 0.5f, -0.5f, 1.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f } }
     };
 
-    CD3D11_BUFFER_DESC desc(sizeof(vertex) * ARRAYSIZE(v), D3D11_BIND_VERTEX_BUFFER);
-    D3D11_SUBRESOURCE_DATA data = { };
-    data.pSysMem = v;
+    constexpr DWORD i[] = {
+        0, 1, 2,
+        0, 2, 3
+    };
 
-    HRESULT hr = this->device->CreateBuffer(&desc, &data, vertex_buffer.put());
-    if (FAILED(hr)) {
-        // handle error
-    }
+    vertex_buffer.initialize(device, v, ARRAYSIZE(v), D3D11_BIND_VERTEX_BUFFER);
+    index_buffer.initialize(device, i, ARRAYSIZE(i), D3D11_BIND_INDEX_BUFFER);
 }
