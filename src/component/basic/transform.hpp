@@ -11,15 +11,15 @@ private:
     matrix mat = DirectX::XMMatrixIdentity();
 
 public:
-    vector2 get_position() const {
+    [[nodiscard]] vector2 get_position() const {
         return this->position;
     }
 
-    vector2 get_scale() const {
+    [[nodiscard]] vector2 get_scale() const {
         return this->scale;
     }
 
-    float get_rotation() const {
+    [[nodiscard]] float get_rotation() const {
         return this->rotation;
     }
 
