@@ -55,10 +55,10 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     auto& app = application::get();
     
     auto quad = app.resources.add<mesh>("quad", std::vector<vertex>{
-        { { -0.5f, -0.5f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f } },
-        { { 0.5f, -0.5f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } },
-        { { -0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
-        { { 0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f } },
+        { { -0.5f, -0.5f }, { 0.0f, 0.0f, 0.0f, 0.5f }, { 0.0f, 0.0f } },
+        { { 0.5f, -0.5f }, { 0.0f, 0.0f, 0.0f, 0.5f }, { 1.0f, 0.0f } },
+        { { -0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f, 0.5f }, { 0.0f, 1.0f } },
+        { { 0.5f, 0.5f }, { 0.0f, 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f } },
     }, std::vector<DWORD>{
         0, 1, 2,
         2, 1, 3
@@ -88,7 +88,7 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     d.mesh = red_quad;
 
     auto& tr2 = ecs.add_component<transform>(entity2);
-    tr2.set_position({300, 300});
+    tr2.set_position({100, 100});
     tr2.set_scale({100, 100});
 }
 

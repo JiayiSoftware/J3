@@ -22,6 +22,7 @@ void renderer::initialize() {
     set_viewport();
     create_rasterizer();
     create_sampler();
+    create_blend_state();
     create_default_resources();
 
     set_background_color({ 0.0f, 0.0f, 0.0f, 1.0f });
@@ -55,6 +56,7 @@ void renderer::render_frame(entt::registry& registry) {
     this->device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     this->device_context->RSSetState(rasterizer_state.get());
+    this->device_context->OMSetBlendState(this->blend_state.get(), nullptr, 0xFFFFFFFF);
 
     auto sampler = sampler_state.get();
     this->device_context->PSSetSamplers(0, 1, &sampler);
@@ -204,6 +206,27 @@ void renderer::create_rasterizer() {
 void renderer::create_sampler() {
     CD3D11_SAMPLER_DESC desc(D3D11_DEFAULT);
     HRESULT hr = this->device->CreateSamplerState(&desc, this->sampler_state.put());
+    if (FAILED(hr)) {
+        // handle error
+    }
+}
+
+void renderer::create_blend_state() {
+    D3D11_RENDER_TARGET_BLEND_DESC rt_blend_desc = {};
+
+    rt_blend_desc.BlendEnable = true;
+    rt_blend_desc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+    rt_blend_desc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+    rt_blend_desc.BlendOp = D3D11_BLEND_OP_ADD;
+    rt_blend_desc.SrcBlendAlpha = D3D11_BLEND_ONE;
+    rt_blend_desc.DestBlendAlpha = D3D11_BLEND_ZERO;
+    rt_blend_desc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+    rt_blend_desc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    
+    D3D11_BLEND_DESC blend_desc = { };
+    blend_desc.RenderTarget[0] = rt_blend_desc;
+
+    HRESULT hr = this->device->CreateBlendState(&blend_desc, this->blend_state.put());
     if (FAILED(hr)) {
         // handle error
     }

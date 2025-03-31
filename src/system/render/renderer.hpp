@@ -42,6 +42,7 @@ private:
     
     winrt::com_ptr<ID3D11RasterizerState> rasterizer_state;
     winrt::com_ptr<ID3D11SamplerState> sampler_state;
+    winrt::com_ptr<ID3D11BlendState> blend_state;
     
     void render_frame(entt::registry& registry);
     
@@ -50,6 +51,7 @@ private:
     void set_viewport();
     void create_rasterizer();
     void create_sampler();
+    void create_blend_state();
     void create_default_resources();
 
     void ensure_texture_loaded(const std::shared_ptr<texture>& tex);

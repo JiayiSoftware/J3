@@ -20,6 +20,6 @@ float4 main(PS_INPUT input) : SV_TARGET
         return input.inColor;
     }
 
-    float3 color = tex.Sample(sam, input.inTexCoord).xyz;
-    return float4(color, 1.0f);
+    float3 color = tex.Sample(sam, input.inTexCoord);
+    return float4(color, input.inColor.w);
 }
