@@ -71,7 +71,8 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     ecs.add_component<drawable>(entity, quad, mart);
 
     auto& tr = ecs.add_component<transform>(entity);
-    tr.set_scale({ 800, 800 });
+    tr.set_scale({ 1500, 1500 });
+    tr.set_rotation(30);
 }
 
 void window::show() const {

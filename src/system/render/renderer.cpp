@@ -53,6 +53,9 @@ void renderer::render_frame(entt::registry& registry) {
     this->device_context->ClearRenderTargetView(this->multisampled_render_target_view.get(), background_color.data());
     this->device_context->ClearDepthStencilView(this->multisampled_depth_stencil_view.get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
+    auto target_ptr = multisampled_render_target_view.get();
+    this->device_context->OMSetRenderTargets(1, &target_ptr, this->multisampled_depth_stencil_view.get());
+
     this->device_context->IASetInputLayout(input_layout.get());
     this->device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -194,8 +197,8 @@ void renderer::create_render_targets() {
     // msaa
     CD3D11_TEXTURE2D_DESC multisampled_texture_desc(
         this->back_buffer_format,
-        this->window_size.x,
-        this->window_size.y,
+        static_cast<UINT>(this->window_size.x),
+        static_cast<UINT>(this->window_size.y),
         1, 1,
         D3D11_BIND_RENDER_TARGET,
         D3D11_USAGE_DEFAULT,
@@ -218,10 +221,10 @@ void renderer::create_render_targets() {
 
     CD3D11_TEXTURE2D_DESC multisampled_depth_desc(
         DXGI_FORMAT_D32_FLOAT,
-        this->window_size.x,
-        this->window_size.y,
+        static_cast<UINT>(this->window_size.x),
+        static_cast<UINT>(this->window_size.y),
         1, 1,
-        D3D11_BIND_RENDER_TARGET,
+        D3D11_BIND_DEPTH_STENCIL,
         D3D11_USAGE_DEFAULT,
         0,
         this->msaa_count,
@@ -239,9 +242,6 @@ void renderer::create_render_targets() {
     if (FAILED(hr)) {
         // handle error
     }
-
-    auto target_ptr = multisampled_render_target_view.get();
-    this->device_context->OMSetRenderTargets(1, &target_ptr, this->multisampled_depth_stencil_view.get());
 }
 
 void renderer::set_viewport() {
@@ -251,6 +251,7 @@ void renderer::set_viewport() {
 
 void renderer::create_rasterizer() {
     CD3D11_RASTERIZER_DESC desc(D3D11_DEFAULT); // solid fill mode, cull back, front is clockwise
+    desc.CullMode = D3D11_CULL_NONE;
     desc.MultisampleEnable = true; // oh yeah multisampling too
     
     HRESULT hr = this->device->CreateRasterizerState(&desc, this->rasterizer_state.put());
