@@ -17,46 +17,52 @@ public:
 };
 
 struct renderer {
-    //void initialize(HWND handle, vector2 size, bool hardware_accelerated = true);
     renderer(HWND handle, vector2 size, bool hardware_accelerated = true);
     void initialize();
     void update(entt::registry& registry);
     void destroy();
 
+    void set_background_color(vector4 col);
+
 private:
     HWND window_handle = nullptr;
     vector2 window_size = { 0, 0 };
     bool hardware_accelerated = true; // by default
+    std::array<float, 4> background_color;
+    DXGI_FORMAT back_buffer_format = DXGI_FORMAT_R8G8B8A8_UNORM;
     
     winrt::com_ptr<ID3D11Device> device;
     winrt::com_ptr<ID3D11DeviceContext> device_context;
     winrt::com_ptr<IDXGISwapChain> swap_chain;
+
+    winrt::com_ptr<ID3D11Texture2D> render_target;
     winrt::com_ptr<ID3D11RenderTargetView> render_target_view;
 
+    // for MSAA
+    UINT msaa_count = 4;
+    UINT msaa_quality = 0;
+    winrt::com_ptr<ID3D11Texture2D> multisampled_render_target;
+    winrt::com_ptr<ID3D11RenderTargetView> multisampled_render_target_view;
+    winrt::com_ptr<ID3D11DepthStencilView> multisampled_depth_stencil_view;
+
     winrt::com_ptr<ID3D11InputLayout> input_layout;
-    vertex_shader vs;
-    pixel_shader ps;
 
     d3d_buffer vertex_buffer;
     d3d_buffer index_buffer;
-    d3d_buffer vertex_constant_buffer;
-    d3d_buffer pixel_constant_buffer;
     
     winrt::com_ptr<ID3D11RasterizerState> rasterizer_state;
-
     winrt::com_ptr<ID3D11SamplerState> sampler_state;
-    winrt::com_ptr<ID3D11ShaderResourceView> a_texture;
+    winrt::com_ptr<ID3D11BlendState> blend_state;
     
     void render_frame(entt::registry& registry);
     
     void create_device_and_swap_chain();
-    void create_render_target();
+    void create_render_targets();
     void set_viewport();
     void create_rasterizer();
     void create_sampler();
-    void setup_shaders();
-    void create_constant_buffers();
-    //void initialize_scene();
+    void create_blend_state();
+    void create_default_resources();
 
     void ensure_texture_loaded(const std::shared_ptr<texture>& tex);
     void ensure_mesh_buffers_created(const std::shared_ptr<mesh>& m);

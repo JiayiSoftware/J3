@@ -109,7 +109,7 @@ target_precompile_headers(j3 PRIVATE src/common.hpp)
 # disable unity build for DirectXTK
 set_property(TARGET DirectXTK PROPERTY UNITY_BUILD FALSE)
 
-target_link_libraries(j3 PRIVATE spdlog EnTT::EnTT DirectXTK d3d11 dxgi d3dcompiler)
+target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK d3d11 dxgi d3dcompiler)
 
 target_compile_definitions(j3 PRIVATE UNICODE)
 target_compile_definitions(j3 PRIVATE WINDOW_CLASS_NAME=L"j3window")

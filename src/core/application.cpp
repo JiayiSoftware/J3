@@ -1,19 +1,27 @@
 #include "application.hpp"
 
+#include "special_folder.hpp"
+
 alignas(application) char application_buffer[sizeof(application)];
 
 application::application(const HINSTANCE instance) {
+    const std::filesystem::path log_folder = special_folder::get(FOLDERID_LocalAppData) / "J3" / "Logs";
+    this->log.init(log_folder);
+    
     this->instance = instance;
-
-    HRESULT hr = CoInitialize(nullptr);
-    if (FAILED(hr)) { // although this will probably never fail
-        // handle error
+    this->log.info("Application start");
+    
+    if (HRESULT hr = CoInitialize(nullptr); FAILED(hr)) { // although this will probably never fail
+        this->log.critical("CoInitialize failed with HRESULT 0x{:08X}", hr);
+        this->quit(-1);
     }
+
+    this->log.debug("Initialized COM apartment");
     
     // get icon because i don't want to load one from a file
-    const auto module_path = new wchar_t[MAX_PATH];
-    GetModuleFileName(this->instance, module_path, MAX_PATH);
-    HICON icon = ExtractIcon(this->instance, module_path, 0);
+    std::array<wchar_t, MAX_PATH> module_path = { };
+    GetModuleFileName(this->instance, module_path.data(), MAX_PATH);
+    HICON icon = ExtractIcon(this->instance, module_path.data(), 0);
 
     // application owns the window class
     WNDCLASSEXW window_class = {};
@@ -26,13 +34,14 @@ application::application(const HINSTANCE instance) {
     window_class.hIcon = icon;
     window_class.lpszClassName = WINDOW_CLASS_NAME;
 
-    ATOM atom = RegisterClassExW(&window_class);
+    ATOM atom = RegisterClassEx(&window_class);
     if (atom == 0) {
-        // handle error
+        this->log.critical("Registering window class failed with result 0x{:08X}", GetLastError());
+        this->quit(-1);
+        return;
     }
 
-    // clean up
-    delete[] module_path;
+    this->log.debug("Application singleton initialized");
 }
 
 application& application::get() {
@@ -50,6 +59,7 @@ void application::run() {
     main_window->show();
 
     // window loop
+    this->log.info("Now running");
     MSG message = { };
     while (running) {
         while (PeekMessage(&message, nullptr, 0, 0, PM_REMOVE)) {
@@ -69,10 +79,18 @@ void application::run() {
             window->update();
         }
     }
+
+    this->log.info("Application end");
 }
 
-void application::quit() {
-    PostQuitMessage(0);
+void application::quit(const int exit_code) {
+    if (!running) {
+        this->log.warn("Exiting immediately");
+        exit(exit_code);
+    }
+
+    this->log.debug("Application exit requested");
+    PostQuitMessage(exit_code);
 }
 
 std::unique_ptr<window>& application::create_window(const std::wstring& title, vector2 size) {

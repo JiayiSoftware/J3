@@ -1,22 +1,24 @@
 #pragma once
 #include "common.hpp"
-#include "timer.hpp"
 
-#include "window.hpp"
 #include "resource/resource_manager.hpp"
+#include "log.hpp"
+#include "timer.hpp"
+#include "window.hpp"
 
 class application {
 public:
     std::vector<std::unique_ptr<window>> windows;
     timer time;
     resource_manager resources;
+    class log log;
     
     explicit application(HINSTANCE instance);
 
     static application& get();
 
     void run();
-    void quit();
+    void quit(int exit_code = 0);
 
     std::unique_ptr<window>& create_window(const std::wstring& title, vector2 size);
     std::unique_ptr<window>& create_window(const std::wstring& title, vector2 position, vector2 size);

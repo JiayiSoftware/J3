@@ -14,9 +14,7 @@ public:
         buffer_data.pSysMem = data;
 
         HRESULT hr = device->CreateBuffer(&desc, &buffer_data, this->buffer.put());
-        if (FAILED(hr)) {
-            // handle error
-        }
+        LOG_HRESULT(error, "DirectX buffer initialization failed", hr);
     }
 
     // specialized function for constant buffers
@@ -26,9 +24,7 @@ public:
             D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
         HRESULT hr = device->CreateBuffer(&desc, nullptr, this->buffer.put());
-        if (FAILED(hr)) {
-            // handle error
-        }
+        LOG_HRESULT(error, "DirectX constant buffer initialization failed", hr);
     }
 
     [[nodiscard]] winrt::com_ptr<ID3D11Buffer>& get() {
