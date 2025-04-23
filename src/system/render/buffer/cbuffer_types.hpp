@@ -10,8 +10,3 @@ struct cb_vertex : cbuffer {
 struct cb_pixel : cbuffer {
     float has_color;
 };
-
-struct cb_msdf : cb_pixel {
-    vector2 glyph_pos;
-    vector2 glyph_size;
-};
