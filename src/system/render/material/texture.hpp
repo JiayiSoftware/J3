@@ -13,5 +13,5 @@ struct texture {
     winrt::com_ptr<ID3D11ShaderResourceView> texture_view = nullptr;
 
     texture(const std::wstring& path) : path(path), res(resource::empty()) { }
-    texture(const resource& resource) : path(L""), res(resource) { }
+    texture(const resource& resource) : res(resource) { }
 };

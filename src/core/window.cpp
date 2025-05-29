@@ -4,10 +4,8 @@
 #include "component/basic/drawable.hpp"
 #include "component/basic/transform.hpp"
 #include "system/render/renderer.hpp"
-#include "system/render/text/font_resource.hpp"
 
 LOAD_RESOURCE(resources_textures_mart_png)
-LOAD_RESOURCE(obj_Montserrat_Medium_ttf_arfont)
 
 window::window(const HINSTANCE instance, const std::wstring& title, const vector2 size, const bool main_window) {
     this->main_window = main_window;
@@ -78,8 +76,6 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     auto& tr = ecs.add_component<transform>(entity);
     tr.set_scale({ 1500, 1500 });
     tr.set_rotation(30);
-
-    auto font = app.resources.add<font_resource>("test_font", GET_RESOURCE(obj_Montserrat_Medium_ttf_arfont));
 
     app.log.debug("Window systems initialized");
 }

@@ -27,14 +27,7 @@ FetchContent_Declare(
         GIT_TAG oct2024
 )
 
-# not a cmake project
-FetchContent_Declare(
-        artery-font-format
-        GIT_REPOSITORY https://github.com/Chlumsky/artery-font-format.git
-        GIT_TAG v1.1
-)
-
-FetchContent_MakeAvailable(spdlog entt DirectXTK artery-font-format)
+FetchContent_MakeAvailable(spdlog entt DirectXTK)
 FetchContent_GetProperties(artery-font-format)
 
 ### source files
@@ -49,8 +42,6 @@ set(TOOL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools)
 file(GLOB VERTEX_SHADERS CONFIGURE_DEPENDS "resources/shaders/*.vs.hlsl")
 file(GLOB PIXEL_SHADERS CONFIGURE_DEPENDS "resources/shaders/*.ps.hlsl")
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
-
-file(GLOB FONTS CONFIGURE_DEPENDS "resources/fonts/*.ttf")
 
 set_source_files_properties(${VERTEX_SHADERS} PROPERTIES ShaderType "vs")
 set_source_files_properties(${PIXEL_SHADERS} PROPERTIES ShaderType "ps")
@@ -96,31 +87,9 @@ function(ADD_RESOURCES out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-function(ADD_FONTS out_var)
-    set(result)
-    foreach(in_f ${ARGN})
-        file(RELATIVE_PATH src_f ${CMAKE_SOURCE_DIR} ${in_f})
-        get_filename_component(in_f_name ${in_f} NAME)
-        add_custom_command(
-                OUTPUT "${OBJ_DIR}/${in_f_name}.arfont"
-                COMMAND ${TOOL_DIR}/msdf-atlas-gen.exe -font ${src_f} -format png -arfont ${OBJ_DIR}/${in_f_name}.arfont -size 36 -pxrange 6
-                DEPENDS ${in_f}
-                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                COMMENT "Building font ${in_f}"
-                VERBATIM
-        )
-        list(APPEND result "${OBJ_DIR}/${in_f_name}.arfont")
-    endforeach()
-    set(${out_var} "${result}" PARENT_SCOPE)
-endfunction()
-
 ### shaders
 
 add_shaders(SHADER_OUTPUTS ${VERTEX_SHADERS} ${PIXEL_SHADERS})
-
-### fonts
-
-add_fonts(FONT_OUTPUTS ${FONTS})
 
 ### resources
 
@@ -129,7 +98,6 @@ file(GLOB_RECURSE INTERMEDIARIES CONFIGURE_DEPENDS "obj/*")
 # all resources except shaders and fonts get embedded into the executable
 file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS "resources/*")
 list(FILTER RESOURCES EXCLUDE REGEX "resources/shaders/*")
-list(FILTER RESOURCES EXCLUDE REGEX "resources/fonts/*")
 
 add_resources(RESOURCE_OBJECTS
         ${INTERMEDIARIES}
@@ -138,21 +106,17 @@ add_resources(RESOURCE_OBJECTS
 
 ### exe
 
-add_executable(j3 WIN32 ${SOURCES} ${SHADER_OUTPUTS} ${FONT_OUTPUTS} ${RESOURCE_OBJECTS})
+add_executable(j3 WIN32 ${SOURCES} ${SHADER_OUTPUTS} ${RESOURCE_OBJECTS})
 
 ### includes and libraries
 
 include_directories(src)
-include_directories(${artery-font-format_SOURCE_DIR})
 target_precompile_headers(j3 PRIVATE src/common.hpp)
-
-add_library(artery-font-format INTERFACE)
-target_include_directories(artery-font-format INTERFACE ${artery-font-format_SOURCE_DIR}/artery-font)
 
 # disable unity build for DirectXTK
 set_property(TARGET DirectXTK PROPERTY UNITY_BUILD FALSE)
 
-target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK d3d11 dxgi d3dcompiler artery-font-format)
+target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK d3d11 dxgi d3dcompiler)
 
 target_compile_definitions(j3 PRIVATE UNICODE)
 target_compile_definitions(j3 PRIVATE WINDOW_CLASS_NAME=L"j3window")
