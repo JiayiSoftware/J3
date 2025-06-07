@@ -12,7 +12,7 @@ std::string_view test_place::layout() {
         </head>
         <body>
             <h1>J3</h1>
-            <p>hi</p>
+            <p>I wrote this text using harfbuzz, and you can tell because these characters I just wrote are overhanging</p>
         </body>
         </rml>
     )";
@@ -36,8 +36,7 @@ std::string_view test_place::styles() {
         }
 
         p {
-            font-size: 12px;
-            font-weight: 300;
+            font-size: 16px;
         }
     )";
 }

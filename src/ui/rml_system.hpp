@@ -2,6 +2,7 @@
 #include "common.hpp"
 
 #include "page.hpp"
+#include "font/FontEngineInterfaceHarfBuzz.h"
 
 // no MSAA for RmlUi, we do this ourselves already
 #define NUM_MSAA_SAMPLES 1
@@ -36,6 +37,7 @@ private:
 
     Rml::Context* context = nullptr;
     Rml::SharedPtr<Rml::StyleSheetContainer> default_styles;
+    Rml::UniquePtr<FontEngineInterfaceHarfBuzz> font_engine;
     std::unordered_map<page_hash, Rml::ElementDocument*> document_map;
     
     Rml::ElementDocument* init_page(page& p) const;

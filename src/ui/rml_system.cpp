@@ -24,6 +24,12 @@ void rml_system::initialize(HWND handle, vector2 size, const winrt::com_ptr<ID3D
     Rml::SetRenderInterface(&this->render_interface);
     Rml::SetSystemInterface(&this->system_interface);
 
+    this->font_engine = Rml::MakeUnique<FontEngineInterfaceHarfBuzz>();
+    Rml::SetFontEngineInterface(this->font_engine.get());
+
+    // add languages (BCP47 code for language, ISO15924 code for script... then text direction obviously)
+    this->font_engine->RegisterLanguage("en", "Latn", TextFlowDirection::LeftToRight);
+
     Rml::Initialise();
     this->context = Rml::CreateContext("main", this->window_size);
 

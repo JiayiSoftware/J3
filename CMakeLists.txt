@@ -42,7 +42,13 @@ FetchContent_Declare(
         GIT_TAG 338ce6c2d11d26481fba5c6f78239910ccd19018
 )
 
-FetchContent_MakeAvailable(spdlog entt DirectXTK RmlUi)
+FetchContent_Declare(
+        harfbuzz
+        GIT_REPOSITORY https://github.com/harfbuzz/harfbuzz.git
+        GIT_TAG 11.2.1
+)
+
+FetchContent_MakeAvailable(spdlog entt DirectXTK RmlUi harfbuzz)
 
 ### source files
 
@@ -139,7 +145,10 @@ target_sources(rmlui_backend_WIN32_DX11 INTERFACE
 )
 target_include_directories(rmlui_backend_WIN32_DX11 INTERFACE ${RMLUI_BACKEND_PATH})
 
-target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK RmlUi::RmlUi rmlui_backend_WIN32_DX11 d3d11 dxgi d3dcompiler)
+# include private RmlUi Core headers to make harfbuzz work
+target_include_directories(j3 PRIVATE ${RmlUi_SOURCE_DIR}/Source/Core)
+
+target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK RmlUi::RmlUi rmlui_backend_WIN32_DX11 harfbuzz d3d11 dxgi d3dcompiler)
 
 target_compile_definitions(j3 PRIVATE UNICODE)
 target_compile_definitions(j3 PRIVATE WINDOW_CLASS_NAME=L"j3window")
