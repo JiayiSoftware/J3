@@ -15,26 +15,12 @@ set(BUILD_SHARED_LIBS OFF)
 
 ### dependencies
 
+CPMAddPackage("gh:gabime/spdlog@1.15.3")
+CPMAddPackage("gh:skypjack/entt@3.15.0")
+CPMAddPackage("gh:microsoft/DirectXTK#mar2025")
+
 add_subdirectory(tools/freetype)
 add_library(Freetype::Freetype ALIAS freetype)
-
-FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG v1.15.1
-)
-
-FetchContent_Declare(
-        entt
-        GIT_REPOSITORY https://github.com/skypjack/entt.git
-        GIT_TAG v3.14.0
-)
-
-FetchContent_Declare(
-        DirectXTK
-        GIT_REPOSITORY https://github.com/microsoft/DirectXTK.git
-        GIT_TAG oct2024
-)
 
 FetchContent_Declare(
         RmlUi
