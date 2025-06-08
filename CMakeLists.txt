@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 project(j3)
 
-include(FetchContent)
+include(cmake/CPM.cmake)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_UNITY_BUILD TRUE)
@@ -18,23 +18,12 @@ set(BUILD_SHARED_LIBS OFF)
 CPMAddPackage("gh:gabime/spdlog@1.15.3")
 CPMAddPackage("gh:skypjack/entt@3.15.0")
 CPMAddPackage("gh:microsoft/DirectXTK#mar2025")
+CPMAddPackage("https://gitlab.freedesktop.org/freetype/freetype.git#VER-2-13-3")
+CPMAddPackage("gh:harfbuzz/harfbuzz#11.2.1")
 
-add_subdirectory(tools/freetype)
+# define alias for freetype so RmlUi can find it
 add_library(Freetype::Freetype ALIAS freetype)
-
-FetchContent_Declare(
-        RmlUi
-        GIT_REPOSITORY https://github.com/phasephasephase/RmlUi.git
-        GIT_TAG 338ce6c2d11d26481fba5c6f78239910ccd19018
-)
-
-FetchContent_Declare(
-        harfbuzz
-        GIT_REPOSITORY https://github.com/harfbuzz/harfbuzz.git
-        GIT_TAG 11.2.1
-)
-
-FetchContent_MakeAvailable(spdlog entt DirectXTK RmlUi harfbuzz)
+CPMAddPackage("gh:phasephasephase/RmlUi#master")
 
 ### source files
 
@@ -131,7 +120,8 @@ target_sources(rmlui_backend_WIN32_DX11 INTERFACE
 )
 target_include_directories(rmlui_backend_WIN32_DX11 INTERFACE ${RMLUI_BACKEND_PATH})
 
-# include private RmlUi Core headers to make harfbuzz work
+# include private RmlUi Core headers to make harfbuzz integration work
+# we gotta do this until harfbuzz is officially merged
 target_include_directories(j3 PRIVATE ${RmlUi_SOURCE_DIR}/Source/Core)
 
 target_link_libraries(j3 PRIVATE spdlog::spdlog EnTT::EnTT DirectXTK RmlUi::RmlUi rmlui_backend_WIN32_DX11 harfbuzz d3d11 dxgi d3dcompiler)
