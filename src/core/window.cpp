@@ -103,7 +103,7 @@ void window::update() {
     auto& t = ecs.get_component<transform>(jiayi_logo_entity);
     
     vector3 rotation = t.get_rotation();
-    rotation.x += 0.5f;
+    rotation.x += 0.53f;
     rotation.y += 0.5f;
     rotation.z += 0.5f;
 

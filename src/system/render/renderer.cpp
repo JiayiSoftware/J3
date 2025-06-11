@@ -68,7 +68,7 @@ void renderer::resize(vector2 new_size) {
     this->render_target = nullptr;
 
     HRESULT hr = this->swap_chain->ResizeBuffers(
-        0, // buffer count, set to 0 to preserve buffers
+        1,
         static_cast<UINT>(new_size.x),
         static_cast<UINT>(new_size.y),
         this->back_buffer_format,
