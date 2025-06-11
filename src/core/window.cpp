@@ -57,14 +57,14 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     app.log.debug("Window created");
 
     // add and initialize systems
-    auto& r = ecs.add_system<renderer>(handle, size); // hardware accelerated by default
-    ecs.initialize();
+    auto& r = this->ecs.add_system<renderer>(handle, size); // hardware accelerated by default
+    this->ecs.initialize();
 
     this->set_background_color({ 0.058f, 0.058f, 0.058f, 1 });
 
     // add camera
-    auto camera_entity = ecs.create_entity();
-    ecs.add_component<camera>(camera_entity);
+    auto camera_entity = this->ecs.create_entity();
+    this->ecs.add_component<camera>(camera_entity);
 
     // create resources
 
@@ -72,35 +72,35 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     auto jiayi_logo = app.resources.add<mesh>("jiayi_logo", jiayi_logo_model[0]);
 
     // initialize services
-    rml.initialize(this->handle, size, r.get_device(), r.get_rtv());
-    rml.register_page<test_place>();
-    rml.show_page<test_place>();
+    this->rml.initialize(this->handle, size, r.get_device(), r.get_rtv());
+    this->rml.register_page<test_place>();
+    this->rml.show_page<test_place>();
 
     // hand rml over to ecs so the renderer can access it
-    auto rml_entity = ecs.create_entity();
-    ecs.add_component<rml_container>(rml_entity, rml);
+    auto rml_entity = this->ecs.create_entity();
+    ecs.add_component<rml_container>(rml_entity, this->rml);
     
     // test drawing entity
-    this->jiayi_logo_entity = ecs.create_entity();
+    this->jiayi_logo_entity = this->ecs.create_entity();
     ecs.add_component<drawable>(this->jiayi_logo_entity, jiayi_logo);
 
-    auto& tr = ecs.add_component<transform>(this->jiayi_logo_entity);
+    auto& tr = this->ecs.add_component<transform>(this->jiayi_logo_entity);
     tr.set_position({ 0, 0, 3 });
 
     app.log.debug("Window systems initialized");
 }
 
 void window::show() const {
-    ShowWindow(handle, SW_SHOW);
-    UpdateWindow(handle);
+    ShowWindow(this->handle, SW_SHOW);
+    UpdateWindow(this->handle);
     
     application::get().log.debug("Window shown");
 }
 
 void window::update() {
-    ecs.update();
+    this->ecs.update();
 
-    auto& t = ecs.get_component<transform>(jiayi_logo_entity);
+    auto& t = this->ecs.get_component<transform>(this->jiayi_logo_entity);
     
     vector3 rotation = t.get_rotation();
     rotation.x += 0.53f;
@@ -111,13 +111,13 @@ void window::update() {
 }
 
 void window::close() {
-    rml.destroy();
+    this->rml.destroy();
     
-    closing = true;
-    DestroyWindow(handle);
+    this->closing = true;
+    DestroyWindow(this->handle);
     
     auto& app = application::get();
-    if (main_window) {
+    if (this->main_window) {
         app.log.debug("Main window closed");
         app.windows.clear();
         app.quit();
