@@ -80,6 +80,7 @@ void renderer::resize(vector2 new_size) {
     LOG_HRESULT(error, "Resize failed", hr);
 
     this->create_render_targets();
+    this->set_viewport();
 }
 
 winrt::com_ptr<ID3D11Device>& renderer::get_device() {

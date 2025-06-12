@@ -74,6 +74,7 @@ void rml_system::destroy() {
 
 void rml_system::resize(const vector2 new_size, const winrt::com_ptr<ID3D11RenderTargetView>& rtv) {
 	this->window_size = { static_cast<int>(new_size.x), static_cast<int>(new_size.y) };
+	this->context->SetDimensions(this->window_size);
 	this->render_target_view = rtv;
 }
 
