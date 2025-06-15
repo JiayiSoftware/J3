@@ -53,6 +53,7 @@ void rml_system::initialize(HWND handle, vector2 size, const winrt::com_ptr<ID3D
     );
 
     this->default_styles = Rml::Factory::InstanceStyleSheetString(Rml::String(this->get_default_styles_str()));
+	
 
     //Rml::Debugger::SetVisible(true);
 }

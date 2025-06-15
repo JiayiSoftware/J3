@@ -7,6 +7,7 @@
 #include "component/ui/rml_container.hpp"
 #include "system/render/renderer.hpp"
 #include "ui/pages/test_place.hpp"
+#include "ui/pages/global_layer/global_layer.hpp"
 
 LOAD_RESOURCE(resources_textures_mart_png)
 LOAD_RESOURCE(resources_models_jiayi_logo_obj)
@@ -79,8 +80,11 @@ void window::finish_create(const HINSTANCE instance, const std::wstring& title, 
     // initialize services
     this->rml.initialize(this->handle, size, r.get_device(), r.get_rtv());
     this->rml.register_page<test_place>();
+    this->rml.register_page<global_layer>();
+    
     this->rml.show_page<test_place>();
-
+    this->rml.show_page<global_layer>();
+    
     // hand rml over to ecs so the renderer can access it
     auto rml_entity = this->ecs.create_entity();
     ecs.add_component<rml_container>(rml_entity, this->rml);
