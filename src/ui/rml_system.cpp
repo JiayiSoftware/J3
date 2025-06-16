@@ -127,7 +127,7 @@ std::string_view rml_system::get_default_styles_str() {
 		    height: 100vh;
 		    z-index: -1;
 		    display: flex;
-			padding: 0 2em;
+			padding: 0 94px;
 		    flex-direction: column;
 		}
 
