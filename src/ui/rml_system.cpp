@@ -121,13 +121,15 @@ std::string_view rml_system::get_default_styles_str() {
 		}
 
 		body {
+            background-color: #0F0F0F00;
+            color: #D9D9D9;
 			font-family: Montserrat;
 			font-size: 16px;
+			font-weight: 600;
 		    width: 100vw;
 		    height: 100vh;
-		    z-index: -1;
 		    display: flex;
-			padding: 0 94px;
+			padding: 15px 15px 15px 94px;
 		    flex-direction: column;
 		}
 
@@ -180,14 +182,6 @@ std::string_view rml_system::get_default_styles_str() {
 
 		scrollbarhorizontal slidertrack {
 			background-color: #FDD;
-		}
-
-		p {
-			display: block;
-		}
-
-		h1 {
-			display: block;
 		}
 
 		em {
@@ -252,48 +246,40 @@ std::string_view rml_system::get_default_styles_str() {
 		}
 
 		h1 {
-			font-size: 2em;
-			font-weight: 900;
-			margin: .67em 0;
+			font-size: 24px;
+			font-weight: 800;
+            margin-bottom: 15px;
 		}
 
 		h2 {
-			font-size: 1.5em;
-			margin: .75em 0;
+			font-size: 20px;
+			font-weight: 700;
+            margin-bottom: 15px;
 		}
 
 		h3 {
-			font-size: 1.17em;
-			margin: .83em 0;
+            color: #6C6C6C;
+			font-size: 18px;
+			font-weight: 700;
+            margin-bottom: 15px;
 		}
 
-		h4,
 		p {
-			margin: 1.12em 0;
+			margin-bottom: 15px;
 		}
 
-		h5 {
-			font-size: .83em;
-			margin: 1.5em 0;
-		}
-
-		h6 {
-			font-size: .75em;
-			margin: 1.67em 0;
-		}
-
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6,
-		strong {
-			font-weight: bold;
-		}
+        i {
+			font-weight: 500;
+            color: #6C6C6C;
+			margin-bottom: 15px;
+        }
 
 		em {
+            color: #6C6C6C;
+			font-weight: 400;
 			font-style: italic;
+            font-size: 12px;
+			margin-bottom: 15px;
 		}
 
 		span {
@@ -338,20 +324,76 @@ std::string_view rml_system::get_default_styles_str() {
 			display: table-row-group;
 		}
 
+        @keyframes button-pressed {
+            from {
+                filter: drop-shadow(#0000003F 0 4px 2px) brightness(250%);
+            }
+
+            to {
+                filter: drop-shadow(#0000003F 0 4px 2px) brightness(150%);
+            }
+        }
+
 		button {
-			background-color: #FFFFFF;
-            color: #000000;
-            border: 2px #999999;
-            padding: 5px;
+			background-color: #CE3A3A;
+            border: 2px #6A1A1A;
+            padding: 7px 9px 7px 9px;
+            border-radius: 4px;
             tab-index: auto;
             cursor: pointer;
             box-sizing: border-box;
-			font-size: 14px;
+			font-weight: 700;
+            filter: drop-shadow(#0000003F 0 4px 2px) brightness(100%);
+            transition: all 0.5s quintic-out;
 		}
 
 		button:hover {
+			filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%);
+		}
+
+        button:active {
+            transition: none;
+            filter: drop-shadow(#0000003F 0 4px 2px) brightness(150%);
+            animation: 0.5s quintic-out button-pressed;
+        }
+
+        button.less {
+			font-weight: 500;
+            background-color: transparent;
+            filter: none;
+        }
+
+		button.less:hover {
 			filter: brightness(120%);
 		}
+
+        button.less:active {
+            transition: none;
+            filter: drop-shadow(#0000003F 0 4px 2px) brightness(150%);
+            animation: 0.5s quintic-out button-pressed;
+        }
+
+
+        button.disabled {
+            font-weight: 500;
+            background-color: transparent;
+            border-color: #6C6C6C;
+            color: #6C6C6C;
+            cursor: unavailable;
+            filter: none;
+        }
+
+        button.disabled:hover {
+            filter: none;
+        }
+
+        button.disabled:active {
+            animation: none;
+        }
+
+        button.progress {
+            cursor: wait;
+        }
 
 		input.text {
             background-color: #FFFFFF;

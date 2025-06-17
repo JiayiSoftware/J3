@@ -87,8 +87,8 @@ void window::finish_create(
     this->rml.register_page<test_place>();
     this->rml.register_page<global_layer>();
 
-    this->rml.show_page<test_place>();
     this->rml.show_page<global_layer>();
+    this->rml.show_page<test_place>();
 
     // hand rml over to ecs so the renderer can access it
     auto rml_entity = this->ecs.create_entity();

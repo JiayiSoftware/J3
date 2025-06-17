@@ -26,6 +26,7 @@ std::string_view global_layer::styles() {
     return R"(
         body {
             height: 100vh;
+            padding: 0;
         }
 
         div {
