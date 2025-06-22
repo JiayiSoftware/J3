@@ -138,33 +138,6 @@ std::string_view rml_system::get_default_styles_str() {
 		    flex-direction: column;
 		}
 
-		title {
-			font-family: Montserrat;
-
-		}
-
-		.fill {
-			flex: 1;
-		}
-
-		input.range {
-			display: block;
-			width: 100%;
-			background-color: #222;
-		}
-
-
-		input.range slidertrack {
-			margin-top: 3dp;
-			background-color: #919191;
-		}
-
-		input.range sliderbar {
-			width: 34dp;
-			background-color: #51357e;
-			border-radius: 20dp;
-		}
-
 		scrollbarvertical {
 			width: 20dp;
 			background-color: #FFF;
@@ -394,6 +367,7 @@ std::string_view rml_system::get_default_styles_str() {
             border: 2px #FFFFFF1C;
             border-radius: 4px;
             padding: 7px 9px 7px 9px;
+            margin-bottom: 15px;
             tab-index: auto;
             cursor: text;
             box-sizing: border-box;
@@ -427,5 +401,49 @@ std::string_view rml_system::get_default_styles_str() {
         input.text.disabled:active {
             animation: none;
         }
+
+		input.range {
+			display: flex;
+            align-items: center;
+			width: 100%;
+			background-color: transparent;
+		}
+
+		input.range slidertrack {
+			background-color: #6A1A1A;
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 2px;
+            transition: all 0.3s quintic-out;
+		}
+
+		input.range sliderbar {
+			width: 16px;
+			height: 16px;
+			background-color: #CE3A3A;
+			border-radius: 8px;
+			filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%) opacity(100%);
+            transition: all 0.3s quintic-out;
+		}
+
+        input.range sliderprogress {
+            height: 7px;
+            background-color: #CE3A3A;
+            border-radius: 3px;
+			filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%);
+            transition: all 0.3s quintic-out;
+        }
+
+        input.range sliderbar:active {
+			filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%) opacity(0%);
+		}
+
+        input.range sliderprogress:active {
+            height: 16px;
+        }
+
+        input.range slidertrack:active {
+            height: 10px;
+		}
     )";
 }

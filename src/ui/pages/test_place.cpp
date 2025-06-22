@@ -38,6 +38,13 @@ std::string_view test_place::layout() {
                     <input disabled type="text" value="No input allowed"/>
                 </div>
             </div>
+
+            <div class="flex-column third-width">
+                <div class="flex-column half-gap">
+                    <label>Slider</label>
+                    <input type="range" min="0" max="100" step="1" orientation="horizontal"/>
+                </div>
+            </div>
         </body>
         </rml>
     )";
@@ -59,6 +66,10 @@ std::string_view test_place::styles() {
 
         .half-gap {
             gap: 7px;
+        }
+
+        .third-width {
+            width: 33%;
         }
     )";
 }
