@@ -1,8 +1,8 @@
 #pragma once
 #include "common.hpp"
 
-#include "framework/resource/resource.hpp"
 #include "font/FontEngineInterfaceHarfBuzz.h"
+#include "framework/resource/resource.hpp"
 
 // no MSAA for RmlUi, we do this ourselves already
 #define NUM_MSAA_SAMPLES 1
@@ -56,11 +56,12 @@ private:
 template <typename page_t>
 void rml_system::register_page() {
     new (&storage<page_t>::page) page_t();
-    
+
     Rml::DataModelConstructor dmc = this->context->CreateDataModel(Rml::String(page_t::name.c_str()) + "_data");
     storage<page_t>::page.initialize(dmc);
 
-    Rml::ElementDocument* document = this->context->LoadDocumentFromMemory(Rml::String(page_t::rml().str()), page_t::name.c_str());
+    Rml::ElementDocument* document =
+        this->context->LoadDocumentFromMemory(Rml::String(page_t::rml().str()), page_t::name.c_str());
     if (!document) return;
 
     const Rml::SharedPtr<Rml::StyleSheetContainer> custom_styles =

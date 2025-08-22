@@ -13,7 +13,7 @@ public:
     static constexpr hat::fixed_string name = "sidebar";
     static resource css() { return GET_RESOURCE(resources_ui_css_sidebar_css); }
     static resource rml() { return GET_RESOURCE(resources_ui_rml_sidebar_rml); }
-    
+
     sidebar();
 
     void after_load() override;

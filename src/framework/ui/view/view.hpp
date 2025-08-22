@@ -9,7 +9,7 @@ public:
 
     void initialize(Rml::DataModelConstructor& dmc);
     virtual void after_load() = 0;
-    
+
 private:
     static T& get_controller() {
         static T instance;

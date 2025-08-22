@@ -1,9 +1,5 @@
 #include "sidebar.hpp"
 
-sidebar::sidebar() {
-    
-}
+sidebar::sidebar() {}
 
-void sidebar::after_load() {
-    
-}
+void sidebar::after_load() {}
