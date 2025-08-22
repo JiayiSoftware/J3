@@ -16,14 +16,18 @@ void rml_system::initialize(
     this->device = device;
     this->render_target_view = rtv;
 
-    this->render_interface.Init(this->device.get());
-    this->system_interface.SetWindow(this->window_handle);
+    this->render_interface = Rml::MakeUnique<dxtk_render_interface>(device);
+    Rml::SetRenderInterface(this->render_interface.get());
 
-    Rml::SetRenderInterface(&this->render_interface);
-    Rml::SetSystemInterface(&this->system_interface);
+    this->system_interface = Rml::MakeUnique<SystemInterface_Win32>();
+    this->system_interface->SetWindow(this->window_handle);
+    Rml::SetSystemInterface(this->system_interface.get());
 
     this->font_engine = Rml::MakeUnique<FontEngineInterfaceHarfBuzz>();
     Rml::SetFontEngineInterface(this->font_engine.get());
+
+    this->file_interface = Rml::MakeUnique<embedded_file_interface>();
+    Rml::SetFileInterface(this->file_interface.get());
 
     // add languages (BCP47 code for language, ISO15924 code for script... then text direction obviously)
     this->font_engine->RegisterLanguage("en", "Latn", TextFlowDirection::LeftToRight);
@@ -58,10 +62,10 @@ void rml_system::initialize(
 
 void rml_system::update() {
     this->context->Update();
-    this->render_interface.SetViewport(this->window_size.x, this->window_size.y);
-    this->render_interface.BeginFrame(this->render_target_view.get());
+    this->render_interface->SetViewport(this->window_size.x, this->window_size.y);
+    this->render_interface->BeginFrame(this->render_target_view.get());
     this->context->Render();
-    this->render_interface.EndFrame();
+    this->render_interface->EndFrame();
 }
 
 void rml_system::destroy() {

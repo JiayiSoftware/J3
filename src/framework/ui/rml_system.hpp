@@ -1,13 +1,12 @@
 #pragma once
 #include "common.hpp"
 
-#include "font/FontEngineInterfaceHarfBuzz.h"
 #include "framework/resource/resource.hpp"
+#include "interface/file/embedded_file_interface.hpp"
+#include "interface/font/FontEngineInterfaceHarfBuzz.h"
+#include "interface/render/dxtk_render_interface.hpp"
 
-// no MSAA for RmlUi, we do this ourselves already
-#define NUM_MSAA_SAMPLES 1
 #include <RmlUi_Platform_Win32.h>
-#include <RmlUi_Renderer_DX11.h>
 
 LOAD_RESOURCE(resources_ui_css_default_css)
 
@@ -44,12 +43,13 @@ private:
     winrt::com_ptr<ID3D11Device> device;
     winrt::com_ptr<ID3D11RenderTargetView> render_target_view;
 
-    RenderInterface_DX11 render_interface;
-    SystemInterface_Win32 system_interface;
+    Rml::UniquePtr<dxtk_render_interface> render_interface;
+    Rml::UniquePtr<embedded_file_interface> file_interface;
+    Rml::UniquePtr<SystemInterface_Win32> system_interface;
+    Rml::UniquePtr<FontEngineInterfaceHarfBuzz> font_engine;
 
     Rml::Context* context = nullptr;
     Rml::SharedPtr<Rml::StyleSheetContainer> default_styles;
-    Rml::UniquePtr<FontEngineInterfaceHarfBuzz> font_engine;
     Rml::UniquePtr<TextInputMethodEditor_Win32> ime;
 };
 

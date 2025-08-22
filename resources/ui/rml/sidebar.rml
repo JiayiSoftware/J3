@@ -9,6 +9,8 @@
         <label>
             <input type="radio"/>
         </label>
+
+        <img src="mart.png"/>
     </div>
     </body>
 </rml>
