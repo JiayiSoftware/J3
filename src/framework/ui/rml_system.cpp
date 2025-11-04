@@ -68,6 +68,10 @@ void rml_system::update() {
     this->render_interface->EndFrame();
 }
 
+void rml_system::request_update(const double timeout) {
+    this->context->RequestNextUpdate(timeout);
+}
+
 void rml_system::destroy() {
     Rml::Shutdown();
     this->ime.reset();

@@ -111,6 +111,10 @@ void window::close() {
     });
 }
 
+bool window::get_focused() const {
+    return GetFocus() == this->handle;
+}
+
 void window::set_background_color(const vector4& color) const {
     renderer& rend = renderer::get_for_window(this->handle);
     rend.set_background_color(color);

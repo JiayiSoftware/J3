@@ -31,12 +31,16 @@ main_window::main_window(HINSTANCE instance, const std::wstring& title, vector2 
 void main_window::update() {
     window::update(); // allow ECS to update
 
+    auto& app = application::get();
     auto& t = this->ecs.get_component<transform>(this->jiayi_logo_entity);
 
     vector3 rotation = t.get_rotation();
-    rotation.x += 0.53f;
-    rotation.y += 0.5f;
-    rotation.z += 0.5f;
+    rotation.x += 23.f * app.time.delta_time;
+    rotation.y += 20.f * app.time.delta_time;
+    rotation.z += 20.f * app.time.delta_time;
 
     t.set_rotation(rotation);
+
+    // changing rendered content requires an update request to properly show in the window
+    this->rml.request_update();
 }

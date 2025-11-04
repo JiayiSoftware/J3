@@ -15,7 +15,9 @@ struct rml_system {
         HWND handle, vector2 size, const winrt::com_ptr<ID3D11Device>& device,
         const winrt::com_ptr<ID3D11RenderTargetView>& rtv
     );
+    
     void update();
+    void request_update(double timeout = 0.0);
     void destroy();
 
     void resize(vector2 new_size, const winrt::com_ptr<ID3D11RenderTargetView>& rtv);
