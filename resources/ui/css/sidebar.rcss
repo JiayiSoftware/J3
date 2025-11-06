@@ -54,7 +54,7 @@ h1 {
 }
 
 .sidebar-item.selected:hover {
-    background-color: #;
+    background-color: #CE3A3A14;
     filter: brightness(120%);
 }
 
