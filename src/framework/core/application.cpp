@@ -62,7 +62,7 @@ void application::run() {
             message,
             main_window->get_focused()
                 ? static_cast<UINT>(Rml::Math::Min(Rml::GetContext("main")->GetNextUpdateDelay(), 10.0) * 1000)
-                : 100
+                : 10000
         );
 
         while (has_message) {
