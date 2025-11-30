@@ -1,11 +1,5 @@
 #include "ecs_manager.hpp"
 
-void ecs_manager::initialize() {
-    for (auto& system : this->systems) {
-        system->initialize();
-    }
-}
-
 void ecs_manager::update() {
     for (auto& system : this->systems) {
         system->update(registry);

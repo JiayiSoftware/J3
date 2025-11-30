@@ -62,7 +62,6 @@ void window::finish_create(
 
     // add and initialize systems
     auto& r = this->ecs.add_system<renderer>(handle, size); // hardware accelerated by default
-    this->ecs.initialize();
 
     // add camera
     auto camera_entity = this->ecs.create_entity();
@@ -154,5 +153,5 @@ bool window::window_proc(UINT message, WPARAM w_param, LPARAM l_param) {
 }
 
 window::~window() {
-    if (!closing) close();
+    if (!closing) window::close();
 }

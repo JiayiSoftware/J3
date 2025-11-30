@@ -4,7 +4,6 @@
 
 class ecs_manager {
 public:
-    void initialize();
     void update();
 
     [[nodiscard]] entt::entity create_entity();
@@ -37,5 +36,6 @@ template <typename system_t, typename ... args>
 system_t& ecs_manager::add_system(args&&... a) {
     static system_t system(std::forward<args>(a)...);
     this->systems.push_back(entity_system{std::in_place_type<system_t&>, system});
+    system.initialize();
     return system;
 }
