@@ -308,6 +308,8 @@ input.range slidertrack {
 input.range sliderbar {
     width: 16px;
     height: 16px;
+    margin-left: -8px;
+    margin-right: -8px;
     background-color: #CE3A3A;
     border-radius: 8px;
     filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%) opacity(100%);
@@ -318,7 +320,7 @@ input.range sliderprogress {
     height: 7px;
     background-color: #CE3A3A;
     border-radius: 8px;
-    transform: scaleX(1.07) translateY(-1px);
+    transform: scaleX(1.03) translateY(-1px);
     transform-origin-x: left;
     filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%);
     transition: all 0.3s quintic-out;
