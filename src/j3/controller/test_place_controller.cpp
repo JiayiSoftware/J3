@@ -22,6 +22,8 @@ void test_place_controller::bind_data(Rml::DataModelConstructor& dmc) {
     });
 
     dmc.BindEventCallback("drop_down_toggle", &test_place_controller::toggle_drop_down_item, this);
+
+    dmc.Bind("color_picker_open", &this->model.color_picker_open);
     
     this->handle = dmc.GetModelHandle();
 }

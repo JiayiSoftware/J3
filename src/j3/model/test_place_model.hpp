@@ -8,4 +8,6 @@ struct test_place_model {
     Rml::String drop_down_selected_items_formatted{ };
     bool drop_down_multiselect{ true };
     bool drop_down_open{ false };
+
+    bool color_picker_open{ false };
 };

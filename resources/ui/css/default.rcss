@@ -318,7 +318,7 @@ input.range sliderprogress {
     height: 7px;
     background-color: #CE3A3A;
     border-radius: 8px;
-    transform: scaleX(1.06) translateY(-1px);
+    transform: scaleX(1.07) translateY(-1px);
     transform-origin-x: left;
     filter: drop-shadow(#0000003F 0 4px 2px) brightness(120%);
     transition: all 0.3s quintic-out;
@@ -485,5 +485,104 @@ input.radio[checked]:active {
 .drop-down .drop-down-items[open="0"] {
     transform: translateY(-38px);
     opacity: 0;
+    z-index: 4;
+    cursor: pointer;
     visibility: hidden;
+}
+
+.color-picker {
+    tab-index: auto;
+}
+
+.color-picker-button {
+    width: 32px;
+    height: 32px;
+    image-color: #0000007F;
+    decorator: image("../../textures/pipette.png" scale-none);
+}
+
+.color-picker-popover {
+    background-color: #FFFFFF0C;
+    border: 2px #FFFFFF1C;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 3;
+    filter: drop-shadow(#000000FF 0 4px 2px);
+    transition: all 0.3s quintic-out;
+}
+
+.color-picker-popover[open="1"] {
+    transform: translateX(0px);
+    opacity: 100%;
+    visibility: visible;
+}
+
+.color-picker-popover[open="0"] {
+    transform: translateX(-38px);
+    opacity: 0;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.color-picker-popover input.range {
+    width: 160px;
+}
+
+.color-picker-popover input.range sliderprogress {
+    transform: scaleX(1.1) translateY(-1px);
+    background-color: transparent;
+}
+
+.color-picker-popover input.range sliderbar {
+    filter: none;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-1px);
+    background-color: #0000007F;
+    border: 2px #FFFFFF;
+}
+
+.color-picker-popover input.range slidertrack {
+    background-color: white;
+}
+
+.color-picker-popover #hue-slider slidertrack {
+    decorator: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+}
+
+.color-picker-popover #alpha-slider slidertrack {
+    background-color: transparent;
+    decorator: image("../../textures/alpha_bar.png"), linear-gradient(to right, transparent, #FFFFFF7F);
+    image-color: #FFFFFF5F;
+}
+
+.color-picker-popover input.text {
+    width: 160px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.color-picker-zone {
+    width: 160px;
+    height: 110px;
+    filter: none;
+    decorator: linear-gradient(to bottom, transparent, black), linear-gradient(to right, white, #CE3A3A);
+}
+
+.color-picker-zone handle {
+    position: relative;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 8px;
+    background-color: #CE3A3A;
+    border: 2px #FFFFFF;
+    cursor: move;
+    transition: all 0.3s quintic-out;
+}
+
+.color-picker-zone handle:active {
+    transform: scale(1.2);
+    background-color: #0000007F;
 }

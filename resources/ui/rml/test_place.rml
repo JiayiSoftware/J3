@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div class="flex-row half-gap">
+    <div class="flex-row">
         <div class="flex-column">
             <div class="flex-column half-gap">
                 <label>Slider</label>
@@ -77,6 +77,25 @@
                         
                         <label for="get_item_id(item)">{{item}}</label>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="color-picker flex-column half-gap">
+            <label>Color picker</label>
+            
+            <div class="flex-row half-gap">
+                <button class="color-picker-button" data-event-click="color_picker_open = !color_picker_open"></button>
+                
+                <div class="color-picker-popover flex-column half-gap" data-attr-open="color_picker_open">
+                    <div class="color-picker-zone">
+                        <handle move_target="#self" edge_margin="-50%"/>
+                    </div>
+
+                    <input id="hue-slider" type="range" min="0" max="1" step="0.01" value="0" orientation="horizontal"/>
+                    <input id="alpha-slider" type="range" min="0" max="1" step="0.01" value="100" orientation="horizontal"/>
+
+                    <input type="text" value="#FF0000"/>
                 </div>
             </div>
         </div>
