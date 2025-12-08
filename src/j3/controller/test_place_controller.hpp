@@ -17,7 +17,7 @@ private:
     void update_formatted_text();
 
     void update_color_picker_color(Rml::DataModelHandle handle, Rml::Event& e, const Rml::VariantList& args);
-
+    void update_color_picker_marker(Rml::Element* marker, Rml::Element* zone);
     std::string hsla_to_hex(vector4 hsla);
     vector4 hex_to_hsla(const std::string& hex);
 };

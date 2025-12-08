@@ -88,9 +88,9 @@
                 <button class="color-picker-button" data-event-click="color_picker_open = !color_picker_open" data-style-background-color="'hsla(' + color_picker_color.hue + ', ' + color_picker_color.saturation + '%, ' + color_picker_color.lightness + '%, ' + color_picker_color.alpha + ')'"></button>
                 
                 <div class="color-picker-popover flex-column half-gap" data-attr-open="color_picker_open">
-                    <div class="color-picker-zone" 
+                    <div class="color-picker-zone" id="color-picker-zone"
                          data-style-decorator="'linear-gradient(to bottom, transparent, black), linear-gradient(to right, white, hsl(' + color_picker_color.hue + ', 100%, 50%))'">
-                        <handle move_target="#self" edge_margin="-50%" data-event-drag="color_picker_update"/>
+                        <handle id="color-picker-marker" move_target="#self" edge_margin="-50%" data-event-drag="color_picker_update"/>
                     </div>
 
                     <input id="hue-slider" type="range" min="0" max="360" step="1" value="0" orientation="horizontal" data-value="color_picker_color.hue" data-event-change="color_picker_update"/>

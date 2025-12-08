@@ -106,6 +106,10 @@ void test_place_controller::update_color_picker_color(
 
             this->model.color_picker_color = this->hex_to_hsla(hex);
             handle.DirtyVariable("color_picker_color");
+            
+            Rml::Element* zone = element->GetParentNode()->GetElementById("color-picker-zone");
+            Rml::Element* marker = zone->GetElementById("color-picker-marker");
+            this->update_color_picker_marker(marker, zone);
             return;
         }
     }
@@ -135,6 +139,28 @@ void test_place_controller::update_color_picker_color(
 
     handle.DirtyVariable("color_picker_color");
     handle.DirtyVariable("color_picker_hex");
+}
+
+void test_place_controller::update_color_picker_marker(Rml::Element* marker, Rml::Element* zone) {
+    // convert HSL back to HSV
+    float s = this->model.color_picker_color.y / 100;
+    float l = this->model.color_picker_color.z / 100;
+    
+    float v = l + s * std::min(l, 1 - l);
+    float sv = v == 0 ? 0 : 2 * (1 - l / v);
+    
+    float x = sv * zone->GetClientWidth();
+    float y = (1 - v) * zone->GetClientHeight();
+    
+    // account for marker center (hardcoded sorry)
+    // x -= marker->GetClientWidth() / 2;
+    // y -= marker->GetClientHeight() / 2;
+    
+    x -= 9;
+    y -= 9;
+    
+    marker->SetProperty("left", fmt::format("{}px", static_cast<int>(x)));
+    marker->SetProperty("top", fmt::format("{}px", static_cast<int>(y)));
 }
 
 std::string test_place_controller::hsla_to_hex(const vector4 hsla) {
