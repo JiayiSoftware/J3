@@ -104,7 +104,7 @@ file(COPY ${RESOURCE_DIR} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 ### exe
 
-add_executable(j3 WIN32 ${SOURCES} ${SHADER_OUTPUTS} ${RESOURCE_OBJECTS})
+add_executable(j3 WIN32 ${SOURCES} ${SHADER_OUTPUTS} ${RESOURCE_OBJECTS} app.manifest)
 add_compile_options("/MP $<$<CONFIG:Release>:/clang:-flto=thin /clang:-Oz>")
 
 ### includes and libraries
