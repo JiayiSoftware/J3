@@ -1,0 +1,9 @@
+<rml>
+    <head>
+        <title>J3 - home</title>
+        <link type="text/rcss" href="../css/default.rcss"/>
+    </head>
+    <body>
+        <h1>Home</h1>
+    </body>
+</rml>
