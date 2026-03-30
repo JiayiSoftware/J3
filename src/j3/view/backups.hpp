@@ -2,9 +2,9 @@
 #include "common.hpp"
 
 #include "framework/ui/view/view.hpp"
-#include "j3/controller/archives_controller.hpp"
+#include "j3/controller/backups_controller.hpp"
 
-class archives : public view<"archives", archives_controller> {
+class backups : public view<"backups", backups_controller> {
 public:
     void after_load() override;
 };

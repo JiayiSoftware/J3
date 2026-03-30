@@ -19,7 +19,7 @@
             </label>
 
             <label class="sidebar-item" data-class-selected="selected_tab == 2">
-                <input type="radio" id="sidebar-archives" data-event-click="selected_tab = 2"/>
+                <input type="radio" id="sidebar-backups" data-event-click="selected_tab = 2"/>
             </label>
 
             <label class="sidebar-item" data-class-selected="selected_tab == 3">

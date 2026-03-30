@@ -118,8 +118,8 @@ h1 {
     decorator: image("../../textures/mod.png" scale-none left center) content-box, text("Mods" 64dp);
 }
 
-#sidebar-archives {
-    decorator: image("../../textures/archive.png" scale-none left center) content-box, text("Archives" 64dp);
+#sidebar-backups {
+    decorator: image("../../textures/archive.png" scale-none left center) content-box, text("Backups" 64dp);
 }
 
 #sidebar-versions {

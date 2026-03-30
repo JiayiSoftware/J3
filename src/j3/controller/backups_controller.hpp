@@ -3,7 +3,7 @@
 
 #include "framework/ui/controller/controller.hpp"
 
-class archives_controller : public controller {
+class backups_controller : public controller {
 public:
     void bind_data(Rml::DataModelConstructor& dmc) override;
 };

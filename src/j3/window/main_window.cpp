@@ -1,6 +1,6 @@
 #include "main_window.hpp"
 
-#include "j3/view/archives.hpp"
+#include "j3/view/backups.hpp"
 #include "j3/view/home.hpp"
 #include "j3/view/mods.hpp"
 #include "j3/view/settings.hpp"
@@ -16,7 +16,7 @@ main_window::main_window(HINSTANCE instance, const std::wstring& title, vector2 
     
     this->rml.register_page<home>();
     this->rml.register_page<mods>();
-    this->rml.register_page<archives>();
+    this->rml.register_page<backups>();
     this->rml.register_page<versions>();
     this->rml.register_page<settings>();
     
