@@ -127,7 +127,7 @@ struct backup::contents backup_manager::count_backup_contents(const std::filesys
     };
     
     std::ranges::for_each(std::filesystem::recursive_directory_iterator{path}, [&](const auto& dir) {
-        if (!dir.path().string().contains("com.mojang")) return;
+        if (dir.path().filename().string() != "com.mojang") return;
         
         root_dir_count++;
         
