@@ -7,6 +7,7 @@
 #include <d3d11.h>
 #include <dxgi1_4.h>
 #include <d3dcompiler.h>
+#include <winrt/base.h>
 #include <winrt/windows.foundation.h>
 
 // standard includes
