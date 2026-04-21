@@ -51,7 +51,7 @@ void backup_manager::create_backup(const std::string& name, const minecraft_vers
     std::filesystem::path real_game_data;
     if (!game.is_gdk()) {
         // easy for UWP
-        real_game_data = game_data / "LocalState" / "games" ;
+        real_game_data = game_data / "LocalState";
         spdlog::debug("Got UWP game platform, game data is at {}", real_game_data.string());
     } else {
         // there is a folder for each Xbox user signed in for GDK and this is very strange
@@ -119,26 +119,32 @@ struct backup::contents backup_manager::count_backup_contents(const std::filesys
         if (!std::filesystem::exists(dir)) return 0;
         
         int count = 0;
-        std::ranges::for_each(std::filesystem::directory_iterator{dir}, [&](const auto& _) {
+        for (const auto& _ : std::filesystem::directory_iterator{ dir }) {
             count++;
-        });
+        }
         
         return count;
     };
     
-    std::ranges::for_each(std::filesystem::recursive_directory_iterator{path}, [&](const auto& dir) {
-        if (dir.path().filename().string() != "com.mojang") return;
+    for (const auto& dir : std::filesystem::directory_iterator{ path }) {
+        if (!dir.is_directory()) continue;
+        
+        std::filesystem::path real_path = dir.path() / "com.mojang"; // UWP (root is games)
+        if (!std::filesystem::exists(real_path)) {
+            real_path = dir.path() / "games" / "com.mojang"; // GDK (root is user folder)
+            if (!std::filesystem::exists(real_path)) continue;
+        }
         
         root_dir_count++;
         
-        auto behavior_packs = dir.path() / "behavior_packs";
-        auto resource_packs = dir.path() / "resource_packs";
-        auto worlds = dir.path() / "minecraftWorlds";
+        auto behavior_packs = real_path / "behavior_packs";
+        auto resource_packs = real_path / "resource_packs";
+        auto worlds = real_path / "minecraftWorlds";
         
         contents.behavior_packs += count_directories(behavior_packs);
         contents.resource_packs += count_directories(resource_packs);
         contents.worlds += count_directories(worlds);
-    });
+    }
     
     if (root_dir_count == 0) {
         spdlog::warn("Seems this backup was empty, no counts returned");
