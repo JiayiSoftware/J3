@@ -10,6 +10,10 @@
     gap: 15dp;
 }
 
+.ten-gap {
+    gap: 10dp;
+}
+
 .half-gap {
     gap: 7dp;
 }
@@ -24,4 +28,8 @@
 
 .third-width {
     width: 30%;
+}
+
+.inner-no-margins * {
+    margin: 0;
 }

@@ -12,4 +12,6 @@ public:
 private:
     backups_model model;
     backup_manager manager{ "./test_backups" };
+    
+    void create_backup(Rml::DataModelHandle handle, Rml::Event& e, const Rml::VariantList& args);
 };

@@ -12,8 +12,8 @@ struct backup {
     
     std::string name;
     std::string path;
-    minecraft_version from_version;
-    std::chrono::system_clock::time_point timestamp;
+    std::string from_version;
+    int64_t timestamp;
     contents contents;
 };
 using backup_collection = std::vector<backup>;

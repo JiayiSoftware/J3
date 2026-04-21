@@ -8,6 +8,25 @@ void backups_controller::bind_data(Rml::DataModelConstructor& dmc) {
     dmc.Bind("current_rp", &this->model.current_rp);
     dmc.Bind("current_bp", &this->model.current_bp);
     
+    if (auto backup_contents_handle = dmc.RegisterStruct<struct backup::contents>()) {
+        backup_contents_handle.RegisterMember("worlds", &backup::contents::worlds);
+        backup_contents_handle.RegisterMember("resource_packs", &backup::contents::resource_packs);
+        backup_contents_handle.RegisterMember("behavior_packs", &backup::contents::behavior_packs);
+        backup_contents_handle.RegisterMember("average", &backup::contents::average);
+    }
+    
+    if (auto backup_handle = dmc.RegisterStruct<backup>()) {
+        backup_handle.RegisterMember("name", &backup::name);
+        backup_handle.RegisterMember("from_version", &backup::from_version);
+        backup_handle.RegisterMember("timestamp", &backup::timestamp);
+        backup_handle.RegisterMember("contents", &backup::contents);
+    }
+    
+    dmc.RegisterArray<backup_collection>();
+    dmc.Bind("collection", &this->model.collection);
+    
+    dmc.BindEventCallback("create_backup", &backups_controller::create_backup, this);
+    
     // init values
     minecraft game;
     this->model.current_version = game.version();
@@ -16,4 +35,12 @@ void backups_controller::bind_data(Rml::DataModelConstructor& dmc) {
     this->model.current_w = current_contents.worlds;
     this->model.current_rp = current_contents.resource_packs;
     this->model.current_bp = current_contents.behavior_packs;
+    
+    this->model.collection = this->manager.get_backups();
+}
+
+void backups_controller::create_backup(Rml::DataModelHandle handle, Rml::Event& e, const Rml::VariantList& args) {
+    std::string backup_name = std::format("Backup {}", this->manager.get_backups().size() + 1);
+    this->manager.create_backup(backup_name, static_cast<const minecraft_version&>(this->model.current_version));
+    handle.DirtyVariable("collection");
 }

@@ -16,9 +16,26 @@
                 <i>{{current_w}} worlds - {{current_rp}} resource packs - {{current_bp}} behavior packs</i>
             </div>
             
-            <div class="backup-buttons">
-                <button>New backup</button>
+            <div class="backup-buttons flex-row ten-gap inner-no-margins">
+                <button data-event-click="create_backup">New backup</button>
             </div>
+        </div>
+        
+        <div class="backup flex-row space-between center-items" data-for="backup : collection">
+            <div class="backup-info">
+                <h2>{{backup.name}} <em>from {{backup.from_version}}</em></h2>
+                <i>{{backup.contents.worlds}} worlds - {{backup.contents.resource_packs}} resource packs - {{backup.contents.behavior_packs}} behavior packs</i>
+            </div>
+
+            <div class="backup-buttons flex-row ten-gap inner-no-margins">
+                <button class="less">Delete</button>
+                <button>Apply</button>
+            </div>
+        </div>
+        
+        <div class="flex-column center-items half-gap inner-no-margins" data-if="collection.size == 0">
+            <i>No backups yet!</i>
+            <em>It's a good idea to back up your stuff</em>
         </div>
     </div>
 </body>

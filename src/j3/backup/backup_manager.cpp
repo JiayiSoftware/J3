@@ -51,7 +51,7 @@ void backup_manager::create_backup(const std::string& name, const minecraft_vers
     std::filesystem::path real_game_data;
     if (!game.is_gdk()) {
         // easy for UWP
-        real_game_data = game_data / "LocalState" / "games" / "com.mojang";
+        real_game_data = game_data / "LocalState" / "games" ;
         spdlog::debug("Got UWP game platform, game data is at {}", real_game_data.string());
     } else {
         // there is a folder for each Xbox user signed in for GDK and this is very strange
@@ -69,7 +69,7 @@ void backup_manager::create_backup(const std::string& name, const minecraft_vers
         name,
         final_backup_path.string(),
         for_version,
-        std::chrono::system_clock::now(),
+        std::chrono::system_clock::now().time_since_epoch().count(),
         this->count_backup_contents(final_backup_path)
     });
     
