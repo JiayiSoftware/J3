@@ -23,14 +23,14 @@ struct rml_system {
     void set_dip_ratio(float ratio);
     bool window_procedure(HWND window_handle, UINT message, WPARAM w_param, LPARAM l_param);
 
-    template <typename page_t>
-    void register_page();
+    template <typename view_t>
+    void register_view();
 
-    template <typename page_t>
-    void show_page();
+    template <typename view_t>
+    void show_view();
 
-    template <typename page_t>
-    void hide_page();
+    template <typename view_t>
+    void hide_view();
 
 private:
     class refresh_listener : public Rml::EventListener {
@@ -43,9 +43,9 @@ private:
         }
     };
 
-    template <typename page_t>
+    template <typename view_t>
     struct storage {
-        static inline page_t page;
+        static inline view_t view;
         static inline Rml::ElementDocument* document = nullptr;
         static inline refresh_listener refresh_listener;
     };
@@ -64,30 +64,30 @@ private:
     Rml::UniquePtr<TextInputMethodEditor_Win32> ime;
 };
 
-template <typename page_t>
-void rml_system::register_page() {
-    Rml::DataModelConstructor dmc = this->context->CreateDataModel(Rml::String(page_t::name.c_str()) + "_data");
-    storage<page_t>::page.initialize(dmc);
+template <typename view_t>
+void rml_system::register_view() {
+    Rml::DataModelConstructor dmc = this->context->CreateDataModel(Rml::String(view_t::name.c_str()) + "_data");
+    storage<view_t>::view.initialize(dmc);
 
-    Rml::ElementDocument* document = this->context->LoadDocument(page_t::path.str());
+    Rml::ElementDocument* document = this->context->LoadDocument(view_t::path.str());
     if (!document) return;
 
-    document->AddEventListener(Rml::EventId::Keydown, &storage<page_t>::refresh_listener);
+    document->AddEventListener(Rml::EventId::Keydown, &storage<view_t>::refresh_listener);
 
-    storage<page_t>::document = document;
-    storage<page_t>::page.after_load();
+    storage<view_t>::document = document;
+    storage<view_t>::view.after_load();
 }
 
-template <typename page_t>
-void rml_system::show_page() {
-    if (storage<page_t>::document == nullptr) return;
+template <typename view_t>
+void rml_system::show_view() {
+    if (storage<view_t>::document == nullptr) return;
 
-    storage<page_t>::document->Show();
+    storage<view_t>::document->Show();
 }
 
-template <typename page_t>
-void rml_system::hide_page() {
-    if (storage<page_t>::document == nullptr) return;
+template <typename view_t>
+void rml_system::hide_view() {
+    if (storage<view_t>::document == nullptr) return;
 
-    storage<page_t>::document->Hide();
+    storage<view_t>::document->Hide();
 }

@@ -30,30 +30,30 @@ void sidebar_controller::switch_tab(Rml::DataModelHandle handle, Rml::Event& eve
     auto& app = application::get();
     auto& window = app.get_main_window();
     
-    window->rml.hide_page<home>();
-    window->rml.hide_page<mods>();
-    window->rml.hide_page<backups>();
-    window->rml.hide_page<versions>();
-    window->rml.hide_page<settings>();
+    window->rml.hide_view<home>();
+    window->rml.hide_view<mods>();
+    window->rml.hide_view<backups>();
+    window->rml.hide_view<versions>();
+    window->rml.hide_view<settings>();
     
     switch (requested_tab) {
     case 0:
-        window->rml.show_page<home>();
+        window->rml.show_view<home>();
         break;
     case 1:
-        window->rml.show_page<mods>();
+        window->rml.show_view<mods>();
         break;
     case 2:
-        window->rml.show_page<backups>();
+        window->rml.show_view<backups>();
         break;
     case 3:
-        window->rml.show_page<versions>();
+        window->rml.show_view<versions>();
         break;
     case 4:
-        window->rml.show_page<settings>();
+        window->rml.show_view<settings>();
         break;
     default:
-        spdlog::warn("Unknown page requested: {}", requested_tab);
+        spdlog::warn("Unknown view requested: {}", requested_tab);
         break;
     }
     
