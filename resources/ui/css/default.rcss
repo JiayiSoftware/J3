@@ -13,10 +13,11 @@ body {
     color: #D9D9D9;
     font-size: 16dp;
     font-weight: 600;
-    width: 100vw;
     height: 100vh;
     display: flex;
-    padding: 15dp 15dp 15dp 94dp;
+    padding: 15dp;
+    left: 81dp;
+    right: 0;
     pointer-events: none;
     flex-direction: column;
 }

@@ -3,40 +3,38 @@
     <title>J3 - backups</title>
     <link type="text/rcss" href="../css/default.rcss"/>
     <link type="text/rcss" href="../css/common.rcss"/>
-    <link type="text/rcss" href="../css/backup.rcss"/>
+    <link type="text/rcss" href="../css/backups.rcss"/>
 </head>
     
 <body data-model="backups_data">
     <h1>backups.name</h1>
 
-    <div class="backups-main flex-column">
-        <div class="backup flex-row space-between center-items">
-            <div class="backup-info">
-                <h2>backups.current.name<em>backups.current.version</em></h2>
-                <i>backups.current.contents</i>
-            </div>
-            
-            <div class="backup-buttons flex-row ten-gap inner-no-margins">
-                <button data-event-click="create_backup">backups.current.new</button>
-            </div>
+    <div class="backup flex-row space-between center-items">
+        <div class="backup-info">
+            <h2>backups.current.name<em>backups.current.version</em></h2>
+            <i>backups.current.contents</i>
         </div>
-        
-        <div class="backup flex-row space-between center-items" data-for="backup : collection">
-            <div class="backup-info">
-                <h2>backups.backup.name<em>backups.backup.version</em></h2>
-                <i>backups.backup.contents</i>
-            </div>
 
-            <div class="backup-buttons flex-row ten-gap inner-no-margins">
-                <button class="less" data-event-click="delete_backup(backup.name)">general.delete</button>
-                <button>general.apply</button>
-            </div>
+        <div class="backup-buttons flex-row ten-gap inner-no-margins">
+            <button data-event-click="create_backup">backups.current.new</button>
         </div>
-        
-        <div class="flex-column center-items half-gap inner-no-margins" data-if="collection.size == 0">
-            <i>backups.none1</i>
-            <em>backups.none2</em>
+    </div>
+
+    <div class="backup flex-row space-between center-items" data-for="backup : collection">
+        <div class="backup-info">
+            <h2>backups.backup.name<em>backups.backup.version</em></h2>
+            <i>backups.backup.contents</i>
         </div>
+
+        <div class="backup-buttons flex-row ten-gap inner-no-margins">
+            <button class="less" data-event-click="delete_backup(backup.name)">general.delete</button>
+            <button>general.apply</button>
+        </div>
+    </div>
+
+    <div class="flex-column center-items half-gap inner-no-margins" data-if="collection.size == 0">
+        <i>backups.none1</i>
+        <em>backups.none2</em>
     </div>
 </body>
 </rml>

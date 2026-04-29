@@ -1,11 +1,11 @@
 <rml>
-    <head>
-        <title>J3 sidebar</title>
-        <link type="text/rcss" href="../css/default.rcss"/>
-        <link type="text/rcss" href="../css/sidebar.rcss"/>
-    </head>
+<head>
+    <title>J3 sidebar</title>
+    <link type="text/rcss" href="../css/default.rcss"/>
+    <link type="text/rcss" href="../css/sidebar.rcss"/>
+</head>
 
-    <body data-model="sidebar_data">
+<body data-model="sidebar_data">
     <div class="sidebar" data-event-mousemove="bring_to_front();">
         <h1>general.app</h1>
     
@@ -31,5 +31,5 @@
             </label>
         </form>
     </div>
-    </body>
+</body>
 </rml>

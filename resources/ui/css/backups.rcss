@@ -1,6 +1,4 @@
-.backups-main {
-    margin-right: 109dp;
-}
+
 
 .backup {
     width: auto;
