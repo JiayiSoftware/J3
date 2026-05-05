@@ -43,6 +43,10 @@ void backups_controller::bind_data(Rml::DataModelConstructor& dmc) {
     this->model.collection = this->manager.get_backups();
 }
 
+void backups_controller::update() {
+    
+}
+
 void backups_controller::create_backup(Rml::DataModelHandle handle, Rml::Event& e, const Rml::VariantList& args) {
     task t = this->manager.create_backup(
         std::format("Backup {}", this->manager.get_backups().size() + 1),

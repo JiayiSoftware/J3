@@ -7,4 +7,5 @@
 class settings : public view<"settings", settings_controller> {
 public:
     void after_load() override;
+    void update() override;
 };

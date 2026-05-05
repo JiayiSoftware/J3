@@ -15,6 +15,32 @@ void sidebar_controller::bind_data(Rml::DataModelConstructor& dmc) {
     dmc.BindEventCallback("switch_tab", &sidebar_controller::switch_tab, this);
 }
 
+void sidebar_controller::update() {
+    auto& app = application::get();
+    const auto& window = app.get_main_window();
+    
+    switch (this->model.selected_tab) {
+    case 0:
+        window->rml.update_view<home>();
+        break;
+    case 1:
+        window->rml.update_view<mods>();
+        break;
+    case 2:
+        window->rml.update_view<backups>();
+        break;
+    case 3:
+        window->rml.update_view<versions>();
+        break;
+    case 4:
+        window->rml.update_view<settings>();
+        break;
+    default:
+        spdlog::warn("Attempted to update unknown view: {}", this->model.selected_tab);
+        break;
+    }
+}
+
 void sidebar_controller::bring_to_front(Rml::DataModelHandle, Rml::Event& event, const Rml::VariantList&) {
     event.GetTargetElement()->GetOwnerDocument()->PullToFront();
 }
@@ -28,7 +54,7 @@ void sidebar_controller::switch_tab(Rml::DataModelHandle handle, Rml::Event& eve
     handle.DirtyVariable("selected_tab");
     
     auto& app = application::get();
-    auto& window = app.get_main_window();
+    const auto& window = app.get_main_window();
     
     window->rml.hide_view<home>();
     window->rml.hide_view<mods>();

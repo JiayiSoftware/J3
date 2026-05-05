@@ -11,9 +11,10 @@ public:
     virtual ~view() = default;
 
     void initialize(Rml::DataModelConstructor& dmc);
+    
     virtual void after_load() = 0;
+    virtual void update() = 0;
 
-private:
     static T& get_controller() {
         static T instance;
         return instance;
@@ -22,5 +23,5 @@ private:
 
 template <hat::fixed_string N, std::derived_from<controller> T>
 void view<N, T>::initialize(Rml::DataModelConstructor& dmc) {
-    get_controller().bind_data(dmc);
+    view::get_controller().bind_data(dmc);
 }

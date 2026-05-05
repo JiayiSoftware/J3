@@ -7,4 +7,5 @@
 class mods : public view<"mods", mods_controller> {
 public:
     void after_load() override;
+    void update() override;
 };

@@ -1,5 +1,7 @@
 #include "sidebar.hpp"
 
-sidebar::sidebar() {}
+void sidebar::after_load() { }
 
-void sidebar::after_load() {}
+void sidebar::update() {
+    sidebar::get_controller().update();
+}

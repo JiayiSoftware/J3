@@ -6,7 +6,6 @@
 
 class sidebar : public view<"sidebar", sidebar_controller> {
 public:
-    sidebar();
-
     void after_load() override;
+    void update() override;
 };

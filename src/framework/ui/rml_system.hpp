@@ -30,6 +30,9 @@ struct rml_system {
 
     template <typename view_t>
     void hide_view();
+    
+    template <typename view_t>
+    void update_view();
 
 private:
     // TODO: reload entire page on F5 instead (or even add hot reloading)
@@ -90,4 +93,9 @@ void rml_system::hide_view() {
     if (storage<view_t>::document == nullptr) return;
 
     storage<view_t>::document->Hide();
+}
+
+template <typename view_t>
+void rml_system::update_view() {
+    storage<view_t>::view.update();
 }

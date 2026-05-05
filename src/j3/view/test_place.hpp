@@ -6,7 +6,6 @@
 
 class test_place : public view<"test_place", test_place_controller> {
 public:
-    test_place();
-
     void after_load() override;
+    void update() override;
 };

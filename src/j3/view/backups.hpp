@@ -7,4 +7,5 @@
 class backups : public view<"backups", backups_controller> {
 public:
     void after_load() override;
+    void update() override;
 };

@@ -10,6 +10,8 @@ class backups_controller : public controller {
 public:
     void bind_data(Rml::DataModelConstructor& dmc) override;
     
+    void update();
+    
 private:
     backups_model model;
     backup_manager manager{ special_folder::get(FOLDERID_LocalAppData) / "J3" / "Backups" };

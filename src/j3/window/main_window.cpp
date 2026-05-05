@@ -28,5 +28,6 @@ main_window::main_window(HINSTANCE instance, const std::wstring& title, const ve
 void main_window::update() {
     window::update(); // allow ECS to update
 
-    // do any updates here
+    // update the sidebar, which lazily updates every view
+    this->rml.update_view<sidebar>();
 }

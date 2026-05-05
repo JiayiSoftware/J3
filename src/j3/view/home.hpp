@@ -7,4 +7,5 @@
 class home : public view<"home", home_controller> {
 public:
     void after_load() override;
+    void update() override;
 };
