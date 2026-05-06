@@ -9,11 +9,11 @@
   "mods.name": "Cargo",
   
   "backups.name": "Treasure Maps",
-  "backups.current.name": "Current booty ",
+  "backups.current.name": "Current booty",
   "backups.current.version": "hails from {{current_version}}",
   "backups.current.contents": "{{current_w}} Treasure Maps - {{current_rp}} Smuggled Goods - {{current_bp}} Drunken Pirates",
   "backups.current.new": "Write Treasure Map",
-  "backups.backup.name": "{{backup.name}} ",
+  "backups.backup.name": "{{backup.name}}",
   "backups.backup.version": "from {{backup.from_version}}",
   "backups.backup.contents": "{{backup.contents.worlds}} Treasure Maps - {{backup.contents.resource_packs}} Smuggled Goods - {{backup.contents.behavior_packs}} Drunken Pirates",
   "backups.none1": "No treasure buried yet!",
