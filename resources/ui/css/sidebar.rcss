@@ -80,7 +80,7 @@ h1 {
 .sidebar-item input {
     width: 100%;
     height: 24dp;
-    padding: 20dp;
+    padding: 20dp 156dp 20dp 20dp; /* forces icon to be in the right spot */
     background-color: transparent;
     border: 0dp transparent;
     border-radius: 0;
@@ -114,21 +114,21 @@ h1 {
 }
 
 #sidebar-home {
-    decorator: image("../../textures/home.png" scale-none left center) content-box, text("home.name" 64dp);
+    decorator: svg("../../textures/home.svg") content-box, text("home.name" 64dp);
 }
 
 #sidebar-mods {
-    decorator: image("../../textures/mod.png" scale-none left center) content-box, text("mods.name" 64dp);
+    decorator: svg("../../textures/mod.svg") content-box, text("mods.name" 64dp);
 }
 
 #sidebar-backups {
-    decorator: image("../../textures/backup.png" scale-none left center) content-box, text("backups.name" 64dp);
+    decorator: svg("../../textures/backup.svg") content-box, text("backups.name" 64dp);
 }
 
 #sidebar-versions {
-    decorator: image("../../textures/version.png" scale-none left center) content-box, text("versions.name" 64dp);
+    decorator: svg("../../textures/version.svg") content-box, text("versions.name" 64dp);
 }
 
 #sidebar-settings {
-    decorator: image("../../textures/settings.png" scale-none left center) content-box, text("settings.name" 64dp);
+    decorator: svg("../../textures/settings.svg") content-box, text("settings.name" 64dp);
 }
