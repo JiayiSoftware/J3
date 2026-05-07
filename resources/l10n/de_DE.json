@@ -7,11 +7,11 @@
   "general.delete": "Löschen",
 
   "general.time.moments_earlier": "Vor einem Moment",
-  "general.time.minutes_earlier": "{} Minuten früher",
-  "general.time.hours_earlier": "{} Stunden früher",
-  "general.time.days_earlier": "{} Tage früher",
-  "general.time.weeks_earlier": "{} Wochen früher",
-  "general.time.long_time_earlier": "Sehr lange her",
+  "general.time.minutes_earlier": "Vor {} Minuten",
+  "general.time.hours_earlier": "Vor {} Stunden",
+  "general.time.days_earlier": "Vor {} Tagen",
+  "general.time.weeks_earlier": "Vor {} Wochen",
+  "general.time.long_time_earlier": "Vor langer Zeit",
   
   "general.task.multiple": "{} Hintergrundaufgaben laufen...",
   
