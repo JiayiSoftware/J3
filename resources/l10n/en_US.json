@@ -6,6 +6,13 @@
   "general.apply": "Apply",
   "general.delete": "Delete",
   
+  "general.time.moments_earlier": "Moments earlier",
+  "general.time.minutes_earlier": "{} minutes earlier",
+  "general.time.hours_earlier": "{} hours earlier",
+  "general.time.days_earlier": "{} days earlier",
+  "general.time.weeks_earlier": "{} weeks earlier",
+  "general.time.long_time_earlier": "A long, long time ago",
+  
   "home.name": "Home",
   
   "mods.name": "Mods",
