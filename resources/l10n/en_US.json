@@ -6,20 +6,32 @@
   "general.apply": "Apply",
   "general.delete": "Delete",
   
+  "general.time.moments_earlier": "Moments earlier",
+  "general.time.minutes_earlier": "{} minutes earlier",
+  "general.time.hours_earlier": "{} hours earlier",
+  "general.time.days_earlier": "{} days earlier",
+  "general.time.weeks_earlier": "{} weeks earlier",
+  "general.time.long_time_earlier": "A long, long time ago",
+  
+  "general.task.multiple": "Running {} background tasks...",
+  
   "home.name": "Home",
   
   "mods.name": "Mods",
   
   "backups.name": "Backups",
-  "backups.current.name": "Current game data ",
+  "backups.current.name": "Current game data",
   "backups.current.version": "from {{current_version}}",
   "backups.current.contents": "{{current_w}} worlds - {{current_rp}} resource packs - {{current_bp}} behavior packs",
   "backups.current.new": "New backup",
-  "backups.backup.name": "{{backup.name}} ",
+  "backups.backup.name": "{{backup.name}}",
   "backups.backup.version": "from {{backup.from_version}}",
   "backups.backup.contents": "{{backup.contents.worlds}} worlds - {{backup.contents.resource_packs}} resource packs - {{backup.contents.behavior_packs}} behavior packs",
   "backups.none1": "No backups yet!",
   "backups.none2": "It's a good idea to back up your stuff",
+  "backups.task.creating": "Creating backup...",
+  "backups.task.copying": "Copying game data...",
+  "backups.task.saving": "Saving new backup...",
   
   "versions.name": "Versions",
   

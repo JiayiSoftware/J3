@@ -6,7 +6,7 @@
 </head>
 
 <body data-model="sidebar_data">
-    <div class="sidebar" data-event-mousemove="bring_to_front();">
+    <div class="sidebar">
         <h1>general.app</h1>
     
         <form class="sidebar-main">

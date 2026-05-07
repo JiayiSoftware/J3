@@ -20,6 +20,7 @@ body {
     right: 0;
     pointer-events: none;
     flex-direction: column;
+    overflow: auto;
 }
 
 body * {
@@ -27,27 +28,21 @@ body * {
 }
 
 scrollbarvertical {
-    width: 20dp;
-    background-color: #FFF;
+    width: 10dp;
+    background-color: transparent;
+}
+
+scrollbarvertical slidertrack {
+    background-color: #6A1A1A;
+    width: 3dp;
+    border-radius: 2dp;
 }
 
 scrollbarvertical sliderbar {
-    width: 20dp;
-    background-color: #000000;
-}
-
-scrollbarhorizontal {
-    height: 20dp;
-    background-color: #FFF;
-}
-
-scrollbarhorizontal sliderbar {
-    height: 20dp;
-    background-color: #000000;
-}
-
-scrollbarhorizontal slidertrack {
-    background-color: #FDD;
+    width: 5dp;
+    background-color: #CE3A3A;
+    margin-left: -1dp;
+    border-radius: 2dp;
 }
 
 em {

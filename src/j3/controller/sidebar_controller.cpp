@@ -5,19 +5,22 @@
 #include "j3/view/home.hpp"
 #include "j3/view/mods.hpp"
 #include "j3/view/settings.hpp"
+#include "j3/view/task/task_bar.hpp"
 #include "j3/view/versions.hpp"
 
 void sidebar_controller::bind_data(Rml::DataModelConstructor& dmc) {
     dmc.Bind("selected_tab", &this->model.selected_tab);
     dmc.Bind("pinned", &this->model.pinned);
 
-    dmc.BindEventCallback("bring_to_front", &sidebar_controller::bring_to_front, this);
     dmc.BindEventCallback("switch_tab", &sidebar_controller::switch_tab, this);
 }
 
 void sidebar_controller::update() {
     auto& app = application::get();
     const auto& window = app.get_main_window();
+    
+    // always update task bar
+    window->rml.update_view<task_bar>();
     
     switch (this->model.selected_tab) {
     case 0:
@@ -39,10 +42,6 @@ void sidebar_controller::update() {
         spdlog::warn("Attempted to update unknown view: {}", this->model.selected_tab);
         break;
     }
-}
-
-void sidebar_controller::bring_to_front(Rml::DataModelHandle, Rml::Event& event, const Rml::VariantList&) {
-    event.GetTargetElement()->GetOwnerDocument()->PullToFront();
 }
 
 void sidebar_controller::switch_tab(Rml::DataModelHandle handle, Rml::Event& event, const Rml::VariantList& args) {

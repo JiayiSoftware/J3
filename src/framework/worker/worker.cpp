@@ -10,13 +10,19 @@ void worker::run() {
             if (!this->task_queue.wait_dequeue_timed(this->current_task, std::chrono::milliseconds{ 5 })) continue;
             
             spdlog::debug("Task assigned: {}", this->current_task.name);
+            this->working = true;
             this->current_task.work(this->current_task);
+            this->working = false;
             spdlog::debug("Task completed: {}", this->current_task.name);
             
             if (this->current_task.on_finished)
                 this->current_task.on_finished();
         }
     });
+}
+
+bool worker::is_working() {
+    return this->working;
 }
 
 worker::~worker() {

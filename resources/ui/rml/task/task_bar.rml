@@ -1,0 +1,14 @@
+<rml>
+<head>
+    <title>J3 - task bar</title>
+    <link type="text/rcss" href="../../css/default.rcss"/>
+    <link type="text/rcss" href="../../css/common.rcss"/>
+    <link type="text/rcss" href="../../css/task/task_bar.rcss"/>
+</head>
+<body data-model="task/task_bar_data">
+    <div class="task-bar flex-column five-gap center-items inner-no-margins" data-attrif-shown="shown">
+        <p>{{task_status}}</p>
+        <progress data-value="total_progress"/>
+    </div>
+</body>
+</rml>

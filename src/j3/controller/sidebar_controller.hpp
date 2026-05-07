@@ -13,6 +13,5 @@ public:
 private:
     sidebar_model model;
 
-    void bring_to_front(Rml::DataModelHandle, Rml::Event& event, const Rml::VariantList&);
     void switch_tab(Rml::DataModelHandle, Rml::Event& event, const Rml::VariantList&);
 };

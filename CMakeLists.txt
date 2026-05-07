@@ -11,6 +11,7 @@ set(DIRECTX_ARCH x64)
 
 # for RmlUi
 set(RMLUI_BACKEND Win32_DX11)
+set(RMLUI_SVG_PLUGIN ON)
 set(BUILD_SHARED_LIBS OFF)
 
 # for Assimp
@@ -27,6 +28,7 @@ CPMAddPackage("gh:assimp/assimp@6.0.2")
 CPMAddPackage("gh:BasedInc/libhat@0.9.0")
 CPMAddPackage("gh:stephenberry/glaze@7.2.2")
 CPMAddPackage("gh:cameron314/concurrentqueue@1.0.5")
+CPMAddPackage("gh:sammycage/lunasvg@3.5.0")
 
 # define alias for freetype so RmlUi can find it
 add_library(Freetype::Freetype ALIAS freetype)

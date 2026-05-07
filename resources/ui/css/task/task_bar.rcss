@@ -1,0 +1,43 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    left: 0;
+    right: 0;
+}
+
+.task-bar {
+    background-color: transparent;
+    width: 100vw;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    filter: drop-shadow(#0000003F 0 4dp 2dp);
+    transition: opacity 0.3s quintic-out;
+    
+    /* if not shown */
+    pointer-events: none;
+    cursor: arrow;
+    opacity: 0;
+}
+
+.task-bar:hover p {
+    text-decoration: underline;
+}
+
+.task-bar[shown] {
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+progress {
+    background-color: transparent;
+    width: 100vw;
+    height: 3dp;
+}
+
+progress fill {
+    background-color: #CE3A3A;
+    height: 3dp;
+}

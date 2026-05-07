@@ -5,6 +5,7 @@
 #include "j3/view/mods.hpp"
 #include "j3/view/settings.hpp"
 #include "j3/view/sidebar.hpp"
+#include "j3/view/task/task_bar.hpp"
 #include "j3/view/versions.hpp"
 
 main_window::main_window(HINSTANCE instance, const std::wstring& title, const vector2 size, const bool main_window)
@@ -17,12 +18,13 @@ main_window::main_window(HINSTANCE instance, const std::wstring& title, const ve
     this->rml.register_view<versions>();
     this->rml.register_view<settings>();
     
+    // always on top views
     this->rml.register_view<sidebar>();
+    this->rml.register_view<task_bar>();
 
     this->rml.show_view<home>();
-
-    // sidebar must be shown after everything so it appears above everything on first launch
     this->rml.show_view<sidebar>();
+    this->rml.show_view<task_bar>();
 }
 
 void main_window::update() {
@@ -30,4 +32,7 @@ void main_window::update() {
 
     // update the sidebar, which lazily updates every view
     this->rml.update_view<sidebar>();
+    
+    this->rml.pull_to_front<sidebar>();
+    this->rml.pull_to_front<task_bar>();
 }

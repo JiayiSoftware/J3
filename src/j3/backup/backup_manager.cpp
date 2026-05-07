@@ -45,7 +45,7 @@ backup_collection& backup_manager::get_backups() {
 task backup_manager::create_backup(const std::string& name, const minecraft_version& for_version) {
     return { [=, this](task& t) {
         spdlog::info("Creating {} for version {}", name, for_version.string(false));
-        t.name = "Creating backup...";
+        t.name = "backups.task.creating";
         
         minecraft game;
         std::filesystem::path game_data = game.data_path();
@@ -62,22 +62,22 @@ task backup_manager::create_backup(const std::string& name, const minecraft_vers
             spdlog::debug("Got GDK game platform, game data is at {}", real_game_data.string());
         }
         
-        t.progress = 0.1f;
-        t.name = "Copying game data...";
+        t.progress = 0.2f;
+        t.name = "backups.task.copying";
     
         std::filesystem::path final_backup_path = this->current_path / name;
         std::filesystem::copy(real_game_data, final_backup_path, std::filesystem::copy_options::recursive);
         spdlog::debug("Copied game data to {}", final_backup_path.string());
         
         t.progress = 0.9f;
-        t.name = "Saving new backup...";
+        t.name = "backups.task.saving";
     
         // new backup
-        this->collection.push_back({
+        this->collection.insert(this->collection.begin(), {
             name,
             final_backup_path.string(),
             for_version.string(),
-            std::chrono::system_clock::now().time_since_epoch().count(),
+            std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count(),
             this->count_backup_contents(final_backup_path)
         });
     

@@ -33,6 +33,9 @@ struct rml_system {
     
     template <typename view_t>
     void update_view();
+    
+    template <typename view_t>
+    void pull_to_front();
 
 private:
     // TODO: reload entire page on F5 instead (or even add hot reloading)
@@ -65,6 +68,8 @@ private:
 
     Rml::Context* context{ nullptr };
     Rml::UniquePtr<TextInputMethodEditor_Win32> ime{ nullptr };
+    
+    std::vector<std::unique_ptr<Rml::ElementDocument>> always_on_top_documents;
 };
 
 template <typename view_t>
@@ -98,4 +103,11 @@ void rml_system::hide_view() {
 template <typename view_t>
 void rml_system::update_view() {
     storage<view_t>::view.update();
+}
+
+template <typename view_t>
+void rml_system::pull_to_front() {
+    if (storage<view_t>::document == nullptr) return;
+    
+    storage<view_t>::document->PullToFront();
 }

@@ -1,9 +1,31 @@
-
-
 .backup {
     width: auto;
     background-color: #FFFFFF0C;
     padding: 10dp;
     border-radius: 4dp;
     filter: drop-shadow(#000000FF 0 4dp 2dp);
+}
+
+.backup-info h2:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.backup-info h2 em {
+    text-decoration: none;
+}
+
+.current-data h2:hover {
+    text-decoration: none;
+    cursor: arrow;
+}
+
+.backup-timestamp {
+    height: 60dp;
+    padding-left: 20dp;
+    gap: 20dp;
+}
+
+.no-backups {
+    margin-top: 20dp;
 }

@@ -14,8 +14,10 @@ public:
     ~worker(); // My only purpose is to work. If I am not working, I am as good as dead.
     
     void run();
+    bool is_working();
     
 private:
     std::thread thread{};
     moodycamel::BlockingConcurrentQueue<task>& task_queue;
+    bool working{ false };
 };
