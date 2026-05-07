@@ -24,23 +24,34 @@
         </div>
     </div>
 
-    <div class="backup flex-row space-between center-items" data-for="backup : manager.collection">
-        <div class="backup-info">
-            <div class="flex-row half-gap bottom-items">
-                <h2>backups.backup.name</h2>
-                <em>backups.backup.version</em>
-            </div>
+    <div data-for="backup : manager.collection">
+        <div class="backup-timestamp flex-row center-items">
+            <svg src="../../textures/history_line.svg" width="5" height="60"/>
             
-            <i>backups.backup.contents</i>
+            <div class="flex-row five-gap center-items inner-no-margins">
+                <svg src="../../textures/timestamp.svg" width="20" height="20"/>
+                <i>{{ format_timestamp(backup.name) }}</i>
+            </div>
         </div>
+        
+        <div class="backup flex-row space-between center-items">
+            <div class="backup-info">
+                <div class="flex-row half-gap bottom-items">
+                    <h2>backups.backup.name</h2>
+                    <em>backups.backup.version</em>
+                </div>
 
-        <div class="backup-buttons flex-row ten-gap inner-no-margins">
-            <button class="less" data-event-click="delete_backup(backup.name)">general.delete</button>
-            <button>general.apply</button>
+                <i>backups.backup.contents</i>
+            </div>
+
+            <div class="backup-buttons flex-row ten-gap inner-no-margins">
+                <button class="less" data-event-click="delete_backup(backup.name)">general.delete</button>
+                <button>general.apply</button>
+            </div>
         </div>
     </div>
 
-    <div class="flex-column center-items half-gap inner-no-margins" data-if="manager.collection.size == 0">
+    <div class="no-backups flex-column center-items half-gap inner-no-margins" data-if="manager.collection.size == 0">
         <i>backups.none1</i>
         <em>backups.none2</em>
     </div>

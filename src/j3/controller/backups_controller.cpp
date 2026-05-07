@@ -9,6 +9,63 @@ void backups_controller::bind_data(Rml::DataModelConstructor& dmc) {
     dmc.Bind("current_rp", &this->model.current_rp);
     dmc.Bind("current_bp", &this->model.current_bp);
     
+    dmc.RegisterTransformFunc("format_timestamp", [&](const Rml::VariantList& args) -> Rml::Variant {
+        if (args.empty()) return { };
+        auto backup_name = args[0].Get<Rml::String>();
+        
+        int64_t t1{ 0 };
+        int64_t t2{ 0 };
+
+        backup_collection& backups = this->manager.get_backups();
+        for (int i = 0; i < backups.size(); ++i) {
+            if (backups[i].name != backup_name) continue;
+            
+            t2 = backups[i].timestamp;
+            t1 = i == 0 
+                ? std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count()
+                : backups[i - 1].timestamp;
+            
+            break;
+        }
+        
+        std::chrono::seconds seconds{ t1 - t2 };
+        
+        Rml::SystemInterface* system = Rml::GetSystemInterface();
+        Rml::String ret;
+
+        if (const std::chrono::years years = std::chrono::duration_cast<std::chrono::years>(seconds);
+            years.count() > 0) {
+            system->TranslateString(ret, "general.time.long_time_earlier");
+            return Rml::Variant{ ret };
+        }
+
+        if (const std::chrono::weeks weeks = std::chrono::duration_cast<std::chrono::weeks>(seconds);
+            weeks.count() > 0) {
+            system->TranslateString(ret, "general.time.weeks_earlier");
+            return Rml::Variant{ fmt::format(fmt::runtime(ret), weeks.count()) };
+        }
+
+        if (const std::chrono::days days = std::chrono::duration_cast<std::chrono::days>(seconds); days.count() > 0) {
+            system->TranslateString(ret, "general.time.days_earlier");
+            return Rml::Variant{ fmt::format(fmt::runtime(ret), days.count()) };
+        }
+
+        if (const std::chrono::hours hours = std::chrono::duration_cast<std::chrono::hours>(seconds);
+            hours.count() > 0) {
+            system->TranslateString(ret, "general.time.hours_earlier");
+            return Rml::Variant{ fmt::format(fmt::runtime(ret), hours.count()) };
+        }
+        
+        if (const std::chrono::minutes minutes = std::chrono::duration_cast<std::chrono::minutes>(seconds);
+            minutes.count() > 1) {
+            system->TranslateString(ret, "general.time.minutes_earlier");
+            return Rml::Variant{ fmt::format(fmt::runtime(ret), minutes.count()) };
+        }
+        
+        system->TranslateString(ret, "general.time.moments_earlier");
+        return Rml::Variant{ ret };
+    });
+    
     if (auto backup_contents_handle = dmc.RegisterStruct<struct backup::contents>()) {
         backup_contents_handle.RegisterMember("worlds", &backup::contents::worlds);
         backup_contents_handle.RegisterMember("resource_packs", &backup::contents::resource_packs);

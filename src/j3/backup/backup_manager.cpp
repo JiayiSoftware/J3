@@ -77,7 +77,7 @@ task backup_manager::create_backup(const std::string& name, const minecraft_vers
             name,
             final_backup_path.string(),
             for_version.string(),
-            std::chrono::system_clock::now().time_since_epoch().count(),
+            std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count(),
             this->count_backup_contents(final_backup_path)
         });
     

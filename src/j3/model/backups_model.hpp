@@ -1,8 +1,6 @@
 #pragma once
 #include "common.hpp"
 
-#include "j3/backup/backup.hpp"
-
 struct backups_model {
     Rml::String current_version{ "Unknown" };
     int current_w{ 0 };

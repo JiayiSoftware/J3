@@ -18,6 +18,10 @@
     gap: 7dp;
 }
 
+.five-gap {
+    gap: 5dp;
+}
+
 .quarter-gap {
     gap: 4dp;
 }

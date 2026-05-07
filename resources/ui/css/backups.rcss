@@ -19,3 +19,13 @@
     text-decoration: none;
     cursor: arrow;
 }
+
+.backup-timestamp {
+    height: 60dp;
+    padding-left: 20dp;
+    gap: 20dp;
+}
+
+.no-backups {
+    margin-top: 20dp;
+}
