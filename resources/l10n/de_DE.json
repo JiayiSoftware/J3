@@ -1,8 +1,19 @@
 {
+  "language": "Deutsch (Deutschland)",
+  
   "general.app": "J3",
   
   "general.apply": "Auswählen",
   "general.delete": "Löschen",
+
+  "general.time.moments_earlier": "Vor einem Moment",
+  "general.time.minutes_earlier": "Vor {} Minuten",
+  "general.time.hours_earlier": "Vor {} Stunden",
+  "general.time.days_earlier": "Vor {} Tagen",
+  "general.time.weeks_earlier": "Vor {} Wochen",
+  "general.time.long_time_earlier": "Vor langer Zeit",
+  
+  "general.task.multiple": "{} Hintergrundaufgaben laufen...",
   
   "home.name": "Home",
   
@@ -18,7 +29,10 @@
   "backups.backup.contents": "{{backup.contents.worlds}} Welten - {{backup.contents.resource_packs}} Resource packs - {{backup.contents.behavior_packs}} Behavior packs",
   "backups.none1": "Derzeit kein Backup!",
   "backups.none2": "Es wäre eine gute Idee, eines zu erstellen, bevor du Mods installierst oder Updates durchführst.",
-  
+  "backups.task.creating": "Backup wird erstellt...",
+  "backups.task.copying": "Spieldaten werden kopiert...",
+  "backups.task.saving": "Neues Backup wird gespeichert...",
+
   "versions.name": "Versionen",
   
   "settings.name": "Einstellungen"
