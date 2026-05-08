@@ -19,6 +19,7 @@
 #include <string>
 #include <span>
 #include <thread>
+#include <tuple>
 #include <vector>
 #include <utility>
 #include <memory>
