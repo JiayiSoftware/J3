@@ -45,9 +45,9 @@ std::string minecraft_version::string(const bool friendly) const {
 }
 
 bool minecraft_version::empty() const {
-    return std::tuple{ this->major, this->minor, this->build, this->revision } == std::tuple{ 0, 0, 0, 0 };
+    return *this == minecraft_version{};
 }
 
 bool minecraft_version::is_gdk() const {
-    return std::tuple{ this->major, this->minor, this->patch } >= std::tuple{ 1, 21, 120 };
+    return *this >= minecraft_version{ 1, 21, 120, 0 };
 }
