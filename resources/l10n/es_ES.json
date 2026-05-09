@@ -1,0 +1,39 @@
+{
+  "language": "Español",
+
+  "general.app": "J3",
+
+  "general.apply": "Aplicar",
+  "general.delete": "Eliminar",
+
+  "general.time.moments_earlier": "Hace unos momentos",
+  "general.time.minutes_earlier": "Hace {} minutos",
+  "general.time.hours_earlier": "Hace {} horas",
+  "general.time.days_earlier": "Hace {} días",
+  "general.time.weeks_earlier": "Hace {} semanas",
+  "general.time.long_time_earlier": "Hace mucho, mucho tiempo",
+
+  "general.task.multiple": "Ejecutando {} tareas en segundo plano...",
+
+  "home.name": "Inicio",
+
+  "mods.name": "Mods",
+
+  "backups.name": "Copias de seguridad",
+  "backups.current.name": "Datos actuales del juego",
+  "backups.current.version": "de {{current_version}}",
+  "backups.current.contents": "{{current_w}} mundos - {{current_rp}} paquetes de recursos - {{current_bp}} paquetes de comportamiento",
+  "backups.current.new": "Nueva copia de seguridad",
+  "backups.backup.name": "{{backup.name}}",
+  "backups.backup.version": "de {{backup.from_version}}",
+  "backups.backup.contents": "{{backup.contents.worlds}} mundos - {{backup.contents.resource_packs}} paquetes de recursos - {{backup.contents.behavior_packs}} paquetes de comportamiento",
+  "backups.none1": "¡Todavía no hay copias de seguridad!",
+  "backups.none2": "Es una buena idea hacer una copia de seguridad de tus cosas",
+  "backups.task.creating": "Creando copia de seguridad...",
+  "backups.task.copying": "Copiando datos del juego...",
+  "backups.task.saving": "Guardando nueva copia de seguridad...",
+
+  "versions.name": "Versiones",
+
+  "settings.name": "Configuración"
+}
