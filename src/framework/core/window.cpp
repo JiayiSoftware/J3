@@ -21,6 +21,7 @@ window::window(
 void window::finish_create(
     const HINSTANCE instance, const std::wstring& title, const vector2 position, const vector2 size
 ) {
+    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
     RECT rect{ 0, 0, static_cast<LONG>(size.x), static_cast<LONG>(size.y) };
     AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, FALSE, WS_EX_APPWINDOW);
 
@@ -62,6 +63,8 @@ void window::finish_create(
     // init and hand rml over to ecs so the renderer can access it
     this->rml.initialize(this->handle, size, r.get_device(), r.get_rtv());
     ecs.add_component<rml_container>(this->ecs.create_entity(), this->rml);
+
+    this->rml.set_dip_ratio(this->get_dip_ratio());
 
     spdlog::debug("Window systems initialized");
 }
