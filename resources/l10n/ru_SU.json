@@ -1,0 +1,39 @@
+{
+  "language": "Русский (СССР)",
+
+  "general.app": "J3",
+
+  "general.apply": "Задействовать",
+  "general.delete": "Сжечь",
+
+  "general.time.moments_earlier": "Только что",
+  "general.time.minutes_earlier": "{} минут назад",
+  "general.time.hours_earlier": "{} часов назад",
+  "general.time.days_earlier": "{} дней назад",
+  "general.time.weeks_earlier": "{} недель назад",
+  "general.time.long_time_earlier": "В далёком прошлом",
+
+  "general.task.multiple": "{} операций скрывается от КГБ...",
+
+  "home.name": "Штаб",
+
+  "mods.name": "Доработки",
+
+  "backups.name": "Архивы",
+  "backups.current.name": "Текущие игровые данные",
+  "backups.current.version": "из {{current_version}}",
+  "backups.current.contents": "{{current_w}} миров - {{current_rp}} установок вида - {{current_bp}} установок поведения",
+  "backups.current.new": "Создать архив",
+  "backups.backup.name": "{{backup.name}}",
+  "backups.backup.version": "из {{backup.from_version}}",
+  "backups.backup.contents": "{{backup.contents.worlds}} миров - {{backup.contents.resource_packs}} установок вида - {{backup.contents.behavior_packs}} установок поведения",
+  "backups.none1": "Архивы отсутствуют!",
+  "backups.none2": "Снял копию - спас плоды коллективного труда!",
+  "backups.task.creating": "Формируется архив...",
+  "backups.task.copying": "Копируются данные...",
+  "backups.task.saving": "Помещаются данные в архив...",
+
+  "versions.name": "Версии",
+
+  "settings.name": "Управление"
+}
