@@ -1,0 +1,39 @@
+{
+    "language": "繁體中文(台灣)",
+
+    "general.app": "J3",
+
+    "general.apply": "允許",
+    "general.delete": "刪除",
+
+    "general.time.moments_earlier": "不久前",
+    "general.time.minutes_earlier": "{} 分鐘前",
+    "general.time.hours_earlier": "{} 小時前",
+    "general.time.days_earlier": "{} 天前",
+    "general.time.weeks_earlier": "{} 週前",
+    "general.time.long_time_earlier": "很久很久以前",
+
+    "general.task.multiple": "正在運行 {} 的後台任務...",
+
+    "home.name": "首頁",
+
+    "mods.name": "模組",
+
+    "backups.name": "備份",
+    "backups.current.name": "當前遊戲資料",
+    "backups.current.version": "來自 {{current_version}}",
+    "backups.current.contents": "{{current_w}} 世界 - {{current_rp}} 資源包 - {{current_bp}} 行為包",
+    "backups.current.new": "新存檔",
+    "backups.backup.name": "{{backup.name}}",
+    "backups.backup.version": "來自 {{backup.from_version}}",
+    "backups.backup.contents": "{{backup.contents.worlds}} 世界 - {{backup.contents.resource_packs}} 資源包 - {{backup.contents.behavior_packs}} 行為包",
+    "backups.none1": "目前還沒有備份!",
+    "backups.none2": "備份你的東西是一個好點子",
+    "backups.task.creating": "創建備份...",
+    "backups.task.copying": "複製遊戲資料...",
+    "backups.task.saving": "儲存新備份...",
+
+    "versions.name": "版本",
+
+    "settings.name": "設定"
+}
